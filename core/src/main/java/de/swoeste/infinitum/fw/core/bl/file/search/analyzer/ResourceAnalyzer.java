@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Sebastian Woeste
+ * Copyright (C) 2016 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license
  * agreements. See the NOTICE file distributed with this work for additional
@@ -16,21 +16,22 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.swoeste.infinitum.fw.core.bl.file.search.model;
+package de.swoeste.infinitum.fw.core.bl.file.search.analyzer;
 
-import java.io.IOException;
+import java.util.List;
+
+import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
+import de.swoeste.infinitum.fw.core.bl.file.search.model.SearchResult;
 
 /**
  * @author swoeste
  */
-public interface Resource {
+public interface ResourceAnalyzer {
 
-    // TODO JAVADOC
-
-    String getFileName();
-
-    String getFilePathAsString();
-
-    String getContentAsString() throws IOException;
+    /**
+     * @param resource
+     * @return
+     */
+    List<SearchResult> analyze(Resource resource);
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Sebastian Woeste
+ * Copyright (C) 2017 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license
  * agreements. See the NOTICE file distributed with this work for additional
@@ -16,21 +16,25 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.swoeste.infinitum.fw.core.bl.file.search.model;
+package de.swoeste.infinitum.fw.core.bl.file.search.filter;
 
-import java.io.IOException;
+import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
 
 /**
  * @author swoeste
  */
-public interface Resource {
+public class ResourceNotFilter implements ResourceFilter {
 
-    // TODO JAVADOC
+    final ResourceFilter resourceFilter;
 
-    String getFileName();
+    public ResourceNotFilter(final ResourceFilter resourceFilter) {
+        this.resourceFilter = resourceFilter;
+    }
 
-    String getFilePathAsString();
-
-    String getContentAsString() throws IOException;
+    /** {@inheritDoc} */
+    @Override
+    public boolean accept(final Resource resource) {
+        return !this.resourceFilter.accept(resource);
+    }
 
 }

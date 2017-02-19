@@ -18,11 +18,11 @@
  */
 package de.swoeste.infinitum.fw.core.bl.file.search.x2;
 
-import java.util.List;
+import java.text.MessageFormat;
 import java.util.Queue;
 
 import de.swoeste.infinitum.fw.core.bl.file.search.Executor;
-import de.swoeste.infinitum.fw.core.bl.file.search.filter.Filter;
+import de.swoeste.infinitum.fw.core.bl.file.search.analyzer.ResourceAnalyzer;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
 
 /**
@@ -30,27 +30,22 @@ import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
  */
 public class FileContentSearchConfiguration {
 
-    private final Queue<Resource> files;
-    private final List<Filter> filters;
-
-    private final String       fileContent;
-
-    private final Executor     executor;
-    private final int          instances;
+    private final Queue<Resource>  files;
+    private final ResourceAnalyzer analyzer;
+    private final Executor         executor;
+    private final int              instances;
 
     /**
      * Constructor for a new FileContentSearchConfiguration.
      *
      * @param files
-     * @param filters
-     * @param fileContent
+     * @param analyzer
      * @param executor
      * @param instances
      */
-    public FileContentSearchConfiguration(final Queue<Resource> files, final List<Filter> filters, final String fileContent, final Executor executor, final int instances) {
+    public FileContentSearchConfiguration(final Queue<Resource> files, final ResourceAnalyzer analyzer, final Executor executor, final int instances) {
         this.files = files;
-        this.filters = filters;
-        this.fileContent = fileContent;
+        this.analyzer = analyzer;
         this.executor = executor;
         this.instances = instances;
     }
@@ -63,17 +58,10 @@ public class FileContentSearchConfiguration {
     }
 
     /**
-     * @return the filters
+     * @return the analyzer
      */
-    public List<Filter> getFilters() {
-        return this.filters;
-    }
-
-    /**
-     * @return the fileContent
-     */
-    public String getFileContent() {
-        return this.fileContent;
+    public ResourceAnalyzer getAnalyzer() {
+        return this.analyzer;
     }
 
     /**
@@ -88,6 +76,13 @@ public class FileContentSearchConfiguration {
      */
     public int getInstances() {
         return this.instances;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String toString() {
+        return MessageFormat.format("FileContentSearchConfiguration [files={0}, analyzer={1}, executor={2}, instances={3}]",  //$NON-NLS-1$
+                this.files, this.analyzer, this.executor, this.instances);
     }
 
 }

@@ -19,41 +19,28 @@
 package de.swoeste.infinitum.fw.core.bl.file.search.model;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.text.MessageFormat;
-
-import org.zeroturnaround.zip.ZipUtil;
 
 /**
  * @author swoeste
  */
-public class ArchiveEntry extends AbstractResource {
-
-    private final String archiveEntryPath;
+public class SimpleFile extends AbstractResource {
 
     /**
-     * Constructor for a new ArchiveEntry.
+     * Constructor for a new SimpleFile.
      *
-     * @param archivePath
-     * @param archiveEntryPath
+     * @param filePath
      */
-    public ArchiveEntry(final Path archivePath, final String archiveEntryPath) {
-        super(archivePath);
-        this.archiveEntryPath = archiveEntryPath;
+    public SimpleFile(final Path filePath) {
+        super(filePath);
     }
 
     /** {@inheritDoc} */
     @Override
     public String getContentAsString() throws IOException {
-        final byte[] bytes = ZipUtil.unpackEntry(getFilePath().toFile(), this.archiveEntryPath);
+        final byte[] bytes = Files.readAllBytes(getFilePath());
         return new String(bytes, getEncoding());
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String toString() {
-        return MessageFormat.format("ArchiveEntry [filePath={0}]", getFilePathAsString()); //$NON-NLS-1$
     }
 
 }

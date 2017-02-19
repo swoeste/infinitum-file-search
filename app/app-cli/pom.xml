@@ -1,0 +1,88 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+	<!-- Parent -->
+    <parent>
+        <groupId>de.swoeste.infinitum.app</groupId>
+        <artifactId>infinitum-file-search.app-aggr</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+	<!-- Project -->
+    <groupId>de.swoeste.infinitum-file-search.app</groupId>
+    <artifactId>app-cli</artifactId>
+    <packaging>jar</packaging>
+
+	<!-- Dependencies -->
+    <dependencies>
+
+		<!-- Infinitum -->
+        <dependency>
+            <groupId>de.swoeste.infinitum-file-search.core</groupId>
+            <artifactId>file.search</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+		<!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+
+        <!-- Apache Commons -->
+        <dependency>
+            <groupId>commons-cli</groupId>
+            <artifactId>commons-cli</artifactId>
+        </dependency>
+
+    </dependencies>
+
+	<!-- Build -->
+    <build>
+        <finalName>infinitum</finalName>
+
+        <resources>
+            <resource>
+				<!-- Add the resources folder by default -->
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>de.swoeste.infinitum.fw.core.bl.file.search.cli.Main</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+    </build>
+
+</project>

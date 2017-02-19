@@ -26,19 +26,17 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import de.swoeste.infinitum.fw.core.bl.file.search.Executor;
-import de.swoeste.infinitum.fw.core.bl.file.search.filter.Filter;
-import de.swoeste.infinitum.fw.core.bl.file.search.model.SearchResult;
+import de.swoeste.infinitum.fw.core.bl.file.search.analyzer.ResourceAnalyzer;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
+import de.swoeste.infinitum.fw.core.bl.file.search.model.SearchResult;
 
 /**
  * @author swoeste
  */
 public class FileContentSearch {
 
-    private final FileContentSearchConfiguration  configuration;
-
-    // TODO currently not used, maybe we could remove it
-    private final List<FileContentCrawler>        crawlers;
+    private final FileContentSearchConfiguration   configuration;
+    private final List<FileContentCrawler>         crawlers;
     private final List<Future<List<SearchResult>>> futures;
 
     /**
@@ -83,9 +81,8 @@ public class FileContentSearch {
 
     private FileContentCrawler createFileContentCrawler() {
         final Queue<Resource> files = this.configuration.getFiles();
-        final List<Filter> filters = this.configuration.getFilters();
-        final String fileContent = this.configuration.getFileContent();
-        return new FileContentCrawler(files, filters, fileContent);
+        final ResourceAnalyzer analyzer = this.configuration.getAnalyzer();
+        return new FileContentCrawler(files, analyzer);
     }
 
 }

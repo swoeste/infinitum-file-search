@@ -16,32 +16,21 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.swoeste.infinitum.fw.core.bl.file.search.model;
+package de.swoeste.infinitum.fw.core.bl.file.search.filter;
 
-import java.nio.file.Path;
+import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
 
 /**
  * @author swoeste
  */
-public class File extends AbstractResource {
+public interface ResourceFilter {
+
+    // TODO javadoc
 
     /**
-     * Constructor for a new SimpleFile.
-     *
-     * @param filePath
+     * @param resource
+     * @return
      */
-    public File(final Path filePath) {
-        super(filePath);
-        // TODO Auto-generated constructor stub
-    }
-
-    private Path path;
-
-    /** {@inheritDoc} */
-    @Override
-    public String getContent() {
-        // TODO Auto-generated method stub
-        return "";
-    }
+    boolean accept(Resource resource);
 
 }

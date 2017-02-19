@@ -25,13 +25,16 @@ import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
+import java.util.List;
 import java.util.zip.ZipEntry;
 
 import org.zeroturnaround.zip.ZipInfoCallback;
 import org.zeroturnaround.zip.ZipUtil;
 
+import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.ArchiveEntry;
-import de.swoeste.infinitum.fw.core.bl.file.search.model.File;
+import de.swoeste.infinitum.fw.core.bl.file.search.model.SimpleFile;
+import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
 
 /**
  * @author swoeste
@@ -40,40 +43,56 @@ public class FileSystemArchiveAwareCrawler extends FileSystemCrawler {
 
     private static final byte[] ZIP = { (byte) 0x50, (byte) 0x4B, (byte) 0x03, (byte) 0x04 };
 
+    /**
+     * Constructor for a new FileSystemArchiveAwareCrawler.
+     *
+     * @param filters
+     */
+    public FileSystemArchiveAwareCrawler(final List<ResourceFilter> filters) {
+        super(filters);
+    }
+
     /** {@inheritDoc} */
     @Override
     public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs) throws IOException {
-        // TODO check if file is an archive
         if (file.toFile().isFile() && isArchive(file)) { // is file check
             ZipUtil.iterate(file.toFile(), new ZipInfoCallback() {
                 @Override
                 public void process(final ZipEntry zipEntry) throws IOException {
-                    getFiles().add(new ArchiveEntry(file, zipEntry.getName()));
+                    final ArchiveEntry archiveEntry = new ArchiveEntry(file, zipEntry.getName());
+                    extracted(archiveEntry);
                 }
             });
-            getFiles().add(new File(file));
+
+            final SimpleFile archiveFile = new SimpleFile(file);
+            extracted(archiveFile);
         }
 
         return super.visitFile(file, attrs);
     }
 
     private boolean isArchive(final Path file) {
-        try {
-            RandomAccessFile raf = new RandomAccessFile(file.toFile(), "r");
+        try (RandomAccessFile raf = new RandomAccessFile(file.toFile(), "r")) {
             byte[] magicNumbers = new byte[ZIP.length];
             raf.read(magicNumbers);
-
             if (Arrays.equals(magicNumbers, ZIP)) {
-                System.out.println("I have found an ZIP file!");
+                System.out.println("I have found a ZIP file!");
                 return true;
             }
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return false;
     }
+
+    // TODO name
+    private void extracted(final Resource archiveFile) {
+        if (accept(archiveFile)) {
+            getFiles().add(archiveFile);
+        }
+    }
+
 }

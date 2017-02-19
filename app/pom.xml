@@ -17,6 +17,7 @@
 	<!-- Modules -->
 	<modules>
 		<module>app-assembly</module>		
+		<module>app-cli</module>
 		<module>app-ui</module>
 	</modules>
 

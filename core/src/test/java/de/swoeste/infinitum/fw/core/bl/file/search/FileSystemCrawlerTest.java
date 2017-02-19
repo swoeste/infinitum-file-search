@@ -18,13 +18,19 @@
  */
 package de.swoeste.infinitum.fw.core.bl.file.search;
 
+import java.io.File;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Queue;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
+import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceNameFilter;
+import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourcePathFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
 import de.swoeste.infinitum.fw.core.bl.file.search.x1.FileSystemSearch;
 import de.swoeste.infinitum.fw.core.bl.file.search.x1.FileSystemSearchConfiguration;
@@ -33,35 +39,116 @@ import de.swoeste.infinitum.fw.core.bl.file.search.x1.FileSystemSearchConfigurat
  * @author swoeste
  */
 @Test
-public class FileSystemCrawlerTest {
+@SuppressWarnings("nls")
+public class FileSystemCrawlerTest extends AbstractCrawlerTest {
+
+    public void testFileSystemCrawler() {
+        final Path directory = getTestFolder();
+
+        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, Collections.emptyList(), false);
+        final FileSystemSearch search = new FileSystemSearch(configuration);
+        search.search();
+
+        final Queue<Resource> files = search.getFiles();
+        final Queue<Resource> failedFiles = search.getFailedFiles();
+
+        Assert.assertFalse(files.isEmpty());
+        Assert.assertTrue(failedFiles.isEmpty());
+    }
 
     public void testFileSystemArchiveAwareCrawler() {
-        final Path directory = Paths.get("E:\\Entwicklung\\source\\infinitum-file-search\\core\\src\\test\\resources\\root");
+        final Path directory = getTestFolder();
 
-        FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, true);
-        FileSystemSearch search = new FileSystemSearch(configuration);
+        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, Collections.emptyList(), true);
+        final FileSystemSearch search = new FileSystemSearch(configuration);
         search.search();
-        Queue<Resource> files = search.getFiles();
-        Queue<Resource> failedFiles = search.getFailedFiles();
+
+        final Queue<Resource> files = search.getFiles();
+        final Queue<Resource> failedFiles = search.getFailedFiles();
+
+        Assert.assertFalse(files.isEmpty());
+        Assert.assertTrue(failedFiles.isEmpty());
+    }
+
+    public void testFileSystemCrawlerWithResourceNameFilter() {
+        final Path directory = getTestFolder();
+
+        final List<ResourceFilter> filters = new ArrayList<>();
+        filters.add(new ResourceNameFilter("1.*"));
+
+        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, filters, false);
+        final FileSystemSearch search = new FileSystemSearch(configuration);
+        search.search();
+
+        final Queue<Resource> files = search.getFiles();
+        final Queue<Resource> failedFiles = search.getFailedFiles();
 
         for (Resource iFile : files) {
-            System.out.println(iFile);
+            final String fileName = iFile.getFileName();
+            Assert.assertTrue(fileName.startsWith("1"), "Expected resource to start with '1' but found " + fileName);
         }
 
         Assert.assertTrue(failedFiles.isEmpty());
     }
 
-    public void testFileSystemCrawler() {
-        final Path directory = Paths.get("E:\\Entwicklung\\source\\infinitum-file-search\\core\\src\\test\\resources\\root");
+    public void testFileSystemArchiveAwareCrawlerWithResourceNameFilter() {
+        final Path directory = getTestFolder();
 
-        FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, false);
-        FileSystemSearch search = new FileSystemSearch(configuration);
+        final List<ResourceFilter> filters = new ArrayList<>();
+        filters.add(new ResourceNameFilter("1.*"));
+
+        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, filters, true);
+        final FileSystemSearch search = new FileSystemSearch(configuration);
         search.search();
-        Queue<Resource> files = search.getFiles();
-        Queue<Resource> failedFiles = search.getFailedFiles();
+
+        final Queue<Resource> files = search.getFiles();
+        final Queue<Resource> failedFiles = search.getFailedFiles();
 
         for (Resource iFile : files) {
-            System.out.println(iFile);
+            final String fileName = iFile.getFileName();
+            Assert.assertTrue(fileName.startsWith("1"), "Expected resource to start with '1' but found " + fileName);
+        }
+
+        Assert.assertTrue(failedFiles.isEmpty());
+    }
+
+    public void testFileSystemCrawlerWithResourcePathFilter() {
+        final Path directory = getTestFolder();
+
+        final List<ResourceFilter> filters = new ArrayList<>();
+        filters.add(new ResourcePathFilter(".*" + "\\" + File.separator + "root" + "\\" + File.separator + "5" + ".*"));
+
+        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, filters, false);
+        final FileSystemSearch search = new FileSystemSearch(configuration);
+        search.search();
+
+        final Queue<Resource> files = search.getFiles();
+        final Queue<Resource> failedFiles = search.getFailedFiles();
+
+        for (Resource file : files) {
+            final String filePath = file.getFilePathAsString();
+            Assert.assertTrue(filePath.contains("\\root\\5"), "Expected resource to contain '\\root\\5' but found " + filePath);
+        }
+
+        Assert.assertTrue(failedFiles.isEmpty());
+    }
+
+    public void testFileSystemArchiveAwareCrawlerWithResourcePathFilter() {
+        final Path directory = getTestFolder();
+
+        final List<ResourceFilter> filters = new ArrayList<>();
+        filters.add(new ResourcePathFilter(".*" + "\\" + File.separator + "root" + "\\" + File.separator + "5" + ".*"));
+
+        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, filters, true);
+        final FileSystemSearch search = new FileSystemSearch(configuration);
+        search.search();
+
+        final Queue<Resource> files = search.getFiles();
+        final Queue<Resource> failedFiles = search.getFailedFiles();
+
+        for (Resource file : files) {
+            final String filePath = file.getFilePathAsString();
+            Assert.assertTrue(filePath.contains("\\root\\5"), "Expected resource to contain '\\root\\5' but found " + filePath);
         }
 
         Assert.assertTrue(failedFiles.isEmpty());

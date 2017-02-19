@@ -5,7 +5,7 @@
 	<!-- Parent -->
 	<parent>
 		<groupId>de.swoeste.infinitum.app</groupId>
-		<artifactId>infinitum-svn-search.app-aggr</artifactId>
+		<artifactId>infinitum-file-search.app-aggr</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
