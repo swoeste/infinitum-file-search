@@ -1,8 +1,8 @@
 # Set the default behavior, in case people don't have core.autocrlf set.
 # Handle files without filetype in file name as binary.
-* binary
+
 # Identify type of files with filetype in file name automatically.
-*.* text=auto
+* text=auto
 
 # Explicitly declare text files you want to always be normalized and converted
 # to native line endings on checkout.
