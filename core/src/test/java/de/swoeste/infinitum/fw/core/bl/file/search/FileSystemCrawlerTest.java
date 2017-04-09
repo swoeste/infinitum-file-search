@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Sebastian Woeste
+ * Copyright (C) 2017 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license
  * agreements. See the NOTICE file distributed with this work for additional
@@ -127,7 +127,8 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
 
         for (Resource file : files) {
             final String filePath = file.getFilePathAsString();
-            Assert.assertTrue(filePath.contains("\\root\\5"), "Expected resource to contain '\\root\\5' but found " + filePath);
+            final String expectedPath = File.separator + "root" + File.separator + "5";
+            Assert.assertTrue(filePath.contains(expectedPath), "Expected resource to contain '" + expectedPath + "' but found " + filePath);
         }
 
         Assert.assertTrue(failedFiles.isEmpty());
@@ -148,7 +149,8 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
 
         for (Resource file : files) {
             final String filePath = file.getFilePathAsString();
-            Assert.assertTrue(filePath.contains("\\root\\5"), "Expected resource to contain '\\root\\5' but found " + filePath);
+            final String expectedPath = File.separator + "root" + File.separator + "5";
+            Assert.assertTrue(filePath.contains(expectedPath), "Expected resource to contain '" + expectedPath + "' but found " + filePath);
         }
 
         Assert.assertTrue(failedFiles.isEmpty());
