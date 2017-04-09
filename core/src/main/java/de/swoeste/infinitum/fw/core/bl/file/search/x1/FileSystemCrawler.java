@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Sebastian Woeste
+ * Copyright (C) 2017 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license
  * agreements. See the NOTICE file distributed with this work for additional
@@ -29,8 +29,8 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
-import de.swoeste.infinitum.fw.core.bl.file.search.model.SimpleFile;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
+import de.swoeste.infinitum.fw.core.bl.file.search.model.SimpleFile;
 
 /**
  * @author swoeste
@@ -91,7 +91,7 @@ public class FileSystemCrawler extends SimpleFileVisitor<Path> {
     }
 
     protected final boolean accept(final Resource resource) {
-        for (ResourceFilter filter : this.filters) {
+        for (final ResourceFilter filter : this.filters) {
             if (!filter.accept(resource)) {
                 return false;
             }

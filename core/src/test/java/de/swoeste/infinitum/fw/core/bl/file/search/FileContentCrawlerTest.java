@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Sebastian Woeste
+ * Copyright (C) 2017 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license
  * agreements. See the NOTICE file distributed with this work for additional
@@ -55,7 +55,7 @@ public class FileContentCrawlerTest extends AbstractCrawlerTest {
 
         Assert.assertEquals(result.size(), 2);
 
-        for (SearchResult searchResult : result) {
+        for (final SearchResult searchResult : result) {
             Assert.assertTrue(searchResult.getContent().equals(exp));
         }
     }
@@ -70,7 +70,7 @@ public class FileContentCrawlerTest extends AbstractCrawlerTest {
 
         final List<SearchResult> result = search.getResult();
 
-        for (SearchResult searchResult : result) {
+        for (final SearchResult searchResult : result) {
             Assert.assertTrue(searchResult.getContent().startsWith("1-"));
         }
 
@@ -89,7 +89,7 @@ public class FileContentCrawlerTest extends AbstractCrawlerTest {
 
         Assert.assertEquals(result.size(), 6);
 
-        for (SearchResult searchResult : result) {
+        for (final SearchResult searchResult : result) {
             Assert.assertTrue(searchResult.getContent().equals(exp));
         }
     }
@@ -106,7 +106,7 @@ public class FileContentCrawlerTest extends AbstractCrawlerTest {
 
         Assert.assertEquals(result.size(), 3);
 
-        for (SearchResult searchResult : result) {
+        for (final SearchResult searchResult : result) {
             Assert.assertTrue(searchResult.getContent().startsWith("rebum"));
             Assert.assertTrue(searchResult.getContent().endsWith("Stet"));
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Sebastian Woeste
+ * Copyright (C) 2017 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license
  * agreements. See the NOTICE file distributed with this work for additional
@@ -97,7 +97,7 @@ public class SearchResult {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        SearchResult other = (SearchResult) obj;
+        final SearchResult other = (SearchResult) obj;
         if (this.content == null) {
             if (other.content != null) {
                 return false;

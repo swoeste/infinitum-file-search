@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Sebastian Woeste
+ * Copyright (C) 2017 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license
  * agreements. See the NOTICE file distributed with this work for additional
@@ -33,8 +33,8 @@ import org.zeroturnaround.zip.ZipUtil;
 
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.ArchiveEntry;
-import de.swoeste.infinitum.fw.core.bl.file.search.model.SimpleFile;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
+import de.swoeste.infinitum.fw.core.bl.file.search.model.SimpleFile;
 
 /**
  * @author swoeste
@@ -73,15 +73,15 @@ public class FileSystemArchiveAwareCrawler extends FileSystemCrawler {
 
     private boolean isArchive(final Path file) {
         try (RandomAccessFile raf = new RandomAccessFile(file.toFile(), "r")) {
-            byte[] magicNumbers = new byte[ZIP.length];
+            final byte[] magicNumbers = new byte[ZIP.length];
             raf.read(magicNumbers);
             if (Arrays.equals(magicNumbers, ZIP)) {
                 System.out.println("I have found a ZIP file!");
                 return true;
             }
-        } catch (FileNotFoundException e) {
+        } catch (final FileNotFoundException e) {
             // TODO Auto-generated catch block
-        } catch (IOException e) {
+        } catch (final IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }

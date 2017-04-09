@@ -72,7 +72,7 @@ public class Main {
             } else {
                 executeSearch(cmd);
             }
-        } catch (ParseException ex) {
+        } catch (final ParseException ex) {
             printHelp(options);
             System.out.println("Error while trying to parse input parameter(s): " + ex.getMessage()); //$NON-NLS-1$
             return;
@@ -96,7 +96,7 @@ public class Main {
 
     private static void displayFCSResult(final FileContentSearch fcSearch) {
         final List<SearchResult> result = fcSearch.getResult();
-        for (SearchResult searchResult : result) {
+        for (final SearchResult searchResult : result) {
             System.out.println(searchResult);
         }
     }
@@ -104,13 +104,13 @@ public class Main {
     private static void displayFSSResult(final FileSystemSearch fsSearch) {
         System.out.println("Result:");
         final Queue<Resource> files = fsSearch.getFiles();
-        for (Resource resource : files) {
+        for (final Resource resource : files) {
             System.out.println(resource);
         }
 
         System.out.println("Failed:");
         final Queue<Resource> failedFiles = fsSearch.getFailedFiles();
-        for (Resource resource : failedFiles) {
+        for (final Resource resource : failedFiles) {
             System.out.println(resource);
         }
     }
@@ -154,7 +154,7 @@ public class Main {
             final List<ResourceFilter> result = new ArrayList<>();
 
             final String[] optionValues = cmd.getOptionValues(OPT_FILE);
-            for (String optionValue : optionValues) {
+            for (final String optionValue : optionValues) {
                 final ResourceFilter filter;
                 if (optionValue.contains("/") || optionValue.contains("\\")) { //$NON-NLS-1$ //$NON-NLS-2$
                     filter = new ResourcePathFilter(optionValue);

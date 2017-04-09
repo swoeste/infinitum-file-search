@@ -83,7 +83,7 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
         final Queue<Resource> files = search.getFiles();
         final Queue<Resource> failedFiles = search.getFailedFiles();
 
-        for (Resource iFile : files) {
+        for (final Resource iFile : files) {
             final String fileName = iFile.getFileName();
             Assert.assertTrue(fileName.startsWith("1"), "Expected resource to start with '1' but found " + fileName);
         }
@@ -104,7 +104,7 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
         final Queue<Resource> files = search.getFiles();
         final Queue<Resource> failedFiles = search.getFailedFiles();
 
-        for (Resource iFile : files) {
+        for (final Resource iFile : files) {
             final String fileName = iFile.getFileName();
             Assert.assertTrue(fileName.startsWith("1"), "Expected resource to start with '1' but found " + fileName);
         }
@@ -125,7 +125,7 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
         final Queue<Resource> files = search.getFiles();
         final Queue<Resource> failedFiles = search.getFailedFiles();
 
-        for (Resource file : files) {
+        for (final Resource file : files) {
             final String filePath = file.getFilePathAsString();
             final String expectedPath = File.separator + "root" + File.separator + "5";
             Assert.assertTrue(filePath.contains(expectedPath), "Expected resource to contain '" + expectedPath + "' but found " + filePath);
@@ -147,7 +147,7 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
         final Queue<Resource> files = search.getFiles();
         final Queue<Resource> failedFiles = search.getFailedFiles();
 
-        for (Resource file : files) {
+        for (final Resource file : files) {
             final String filePath = file.getFilePathAsString();
             final String expectedPath = File.separator + "root" + File.separator + "5";
             Assert.assertTrue(filePath.contains(expectedPath), "Expected resource to contain '" + expectedPath + "' but found " + filePath);

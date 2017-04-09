@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Sebastian Woeste
+ * Copyright (C) 2017 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license
  * agreements. See the NOTICE file distributed with this work for additional
@@ -18,12 +18,12 @@
  */
 package de.swoeste.infinitum.fw.core.bl.file.search.ui.view;
 
+import de.swoeste.infinitum.fw.core.bl.file.search.ui.App;
+import de.swoeste.infinitum.fw.core.bl.file.search.ui.model.UIPath;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import de.swoeste.infinitum.fw.core.bl.file.search.ui.App;
-import de.swoeste.infinitum.fw.core.bl.file.search.ui.model.UIPath;
 
 /**
  * @author swoeste
