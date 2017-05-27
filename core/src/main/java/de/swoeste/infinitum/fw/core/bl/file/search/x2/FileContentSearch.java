@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Sebastian Woeste
+ * Copyright (C) 2017 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license
  * agreements. See the NOTICE file distributed with this work for additional
@@ -63,15 +63,15 @@ public class FileContentSearch {
 
     public List<SearchResult> getResult() {
         final List<SearchResult> result = new ArrayList<>();
-        for (Future<List<SearchResult>> future : this.futures) {
+        for (final Future<List<SearchResult>> future : this.futures) {
             try {
                 final List<SearchResult> futureResult = future.get();
                 System.out.println("finished");
                 result.addAll(futureResult);
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            } catch (ExecutionException e) {
+            } catch (final ExecutionException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }

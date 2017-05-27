@@ -88,12 +88,9 @@ public class FileSystemCrawler extends SimpleFileVisitor<Path> {
         return this.failedFiles;
     }
 
-    protected final boolean accept( final Resource resource ) {
-        // FIXME LOGGING
-        for ( ResourceFilter filter : this.filters ) {
-            System.out.println( filter );
-            System.out.println( resource );
-            if ( !filter.accept( resource ) ) {
+    protected final boolean accept(final Resource resource) {
+        for (final ResourceFilter filter : this.filters) {
+            if (!filter.accept(resource)) {
                 return false;
             }
         }

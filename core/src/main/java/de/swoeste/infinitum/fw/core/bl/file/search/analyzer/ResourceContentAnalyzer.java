@@ -62,7 +62,7 @@ public class ResourceContentAnalyzer implements ResourceAnalyzer {
             }
 
             return result;
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             final String message = MessageFormat.format("Unable to analyze: {0}", resource); //$NON-NLS-1$
             throw new IllegalArgumentException(message, ex);
         }

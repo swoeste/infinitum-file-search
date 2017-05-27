@@ -37,7 +37,7 @@ public class AbstractCrawlerTest {
             final URL resource = this.getClass().getClassLoader().getResource(TEST_FOLDER_MARKER);
             final Path markerFile = Paths.get(resource.toURI());
             return markerFile.getParent();
-        } catch (URISyntaxException e) {
+        } catch (final URISyntaxException e) {
             Assert.fail();
             return null;
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Sebastian Woeste
+ * Copyright (C) 2017 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license
  * agreements. See the NOTICE file distributed with this work for additional
@@ -83,7 +83,7 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
         final Queue<Resource> files = search.getFiles();
         final Queue<Resource> failedFiles = search.getFailedFiles();
 
-        for (Resource iFile : files) {
+        for (final Resource iFile : files) {
             final String fileName = iFile.getFileName();
             Assert.assertTrue(fileName.startsWith("1"), "Expected resource to start with '1' but found " + fileName);
         }
@@ -104,7 +104,7 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
         final Queue<Resource> files = search.getFiles();
         final Queue<Resource> failedFiles = search.getFailedFiles();
 
-        for (Resource iFile : files) {
+        for (final Resource iFile : files) {
             final String fileName = iFile.getFileName();
             Assert.assertTrue(fileName.startsWith("1"), "Expected resource to start with '1' but found " + fileName);
         }
@@ -125,9 +125,10 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
         final Queue<Resource> files = search.getFiles();
         final Queue<Resource> failedFiles = search.getFailedFiles();
 
-        for (Resource file : files) {
+        for (final Resource file : files) {
             final String filePath = file.getFilePathAsString();
-            Assert.assertTrue(filePath.contains("\\root\\5"), "Expected resource to contain '\\root\\5' but found " + filePath);
+            final String expectedPath = File.separator + "root" + File.separator + "5";
+            Assert.assertTrue(filePath.contains(expectedPath), "Expected resource to contain '" + expectedPath + "' but found " + filePath);
         }
 
         Assert.assertTrue(failedFiles.isEmpty());
@@ -146,9 +147,10 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
         final Queue<Resource> files = search.getFiles();
         final Queue<Resource> failedFiles = search.getFailedFiles();
 
-        for (Resource file : files) {
+        for (final Resource file : files) {
             final String filePath = file.getFilePathAsString();
-            Assert.assertTrue(filePath.contains("\\root\\5"), "Expected resource to contain '\\root\\5' but found " + filePath);
+            final String expectedPath = File.separator + "root" + File.separator + "5";
+            Assert.assertTrue(filePath.contains(expectedPath), "Expected resource to contain '" + expectedPath + "' but found " + filePath);
         }
 
         Assert.assertTrue(failedFiles.isEmpty());

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Sebastian Woeste
+ * Copyright (C) 2017 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license agreements. See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership. I license this file to You under the Apache

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Sebastian Woeste
+ * Copyright (C) 2017 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license
  * agreements. See the NOTICE file distributed with this work for additional
@@ -46,7 +46,7 @@ public class FileSystemSearch {
     public void search() {
         try {
             Files.walkFileTree(this.configuration.getPath(), Collections.emptySet(), this.configuration.getDepth(), this.crawler);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             // FIXME, implement some nice error handling
             e.printStackTrace();
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Sebastian Woeste
+ * Copyright (C) 2017 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license agreements. See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership. I license this file to You under the Apache
@@ -45,8 +45,7 @@ public class FileContentCrawlerTest extends AbstractCrawlerTest {
         final Queue<Resource> files = searchForFiles( ".*" );
 
         final String exp = "1-1";
-        final FileContentSearchConfiguration configuration = new FileContentSearchConfiguration( files,
-                new ResourceContentAnalyzer( exp ), RunnableExecutor.getInstance(), 4 );
+        final FileContentSearchConfiguration configuration = new FileContentSearchConfiguration(files, new ResourceContentAnalyzer(exp), RunnableExecutor.getInstance(), 4);
         final FileContentSearch search = new FileContentSearch( configuration );
         search.search();
 
@@ -58,8 +57,8 @@ public class FileContentCrawlerTest extends AbstractCrawlerTest {
 
         Assert.assertEquals( result.size(), 2 );
 
-        for ( SearchResult searchResult : result ) {
-            Assert.assertTrue( searchResult.getContent().equals( exp ) );
+        for (final SearchResult searchResult : result) {
+            Assert.assertTrue(searchResult.getContent().equals(exp));
         }
     }
 
@@ -74,7 +73,7 @@ public class FileContentCrawlerTest extends AbstractCrawlerTest {
 
         final List<SearchResult> result = search.getResult();
 
-        for ( SearchResult searchResult : result ) {
+        for (final SearchResult searchResult : result) {
             Assert.assertTrue( searchResult.getContent().startsWith( "1-" ) );
         }
 
@@ -94,7 +93,7 @@ public class FileContentCrawlerTest extends AbstractCrawlerTest {
 
         Assert.assertEquals( result.size(), 6 );
 
-        for ( SearchResult searchResult : result ) {
+        for (final SearchResult searchResult : result) {
             Assert.assertTrue( searchResult.getContent().equals( exp ) );
         }
     }
@@ -112,7 +111,7 @@ public class FileContentCrawlerTest extends AbstractCrawlerTest {
 
         Assert.assertEquals( result.size(), 3 );
 
-        for ( SearchResult searchResult : result ) {
+        for (final SearchResult searchResult : result) {
             Assert.assertTrue( searchResult.getContent().startsWith( "rebum" ) );
             Assert.assertTrue( searchResult.getContent().endsWith( "Stet" ) );
         }

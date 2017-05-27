@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Sebastian Woeste
+ * Copyright (C) 2017 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license agreements. See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership. I license this file to You under the Apache
@@ -78,16 +78,16 @@ public class FileSystemArchiveAwareCrawler extends FileSystemCrawler {
 
     private boolean isArchive( final Path file ) {
         try (RandomAccessFile raf = new RandomAccessFile( file.toFile(), "r" )) {
-            byte[] magicNumbers = new byte[ZIP.length];
+            final byte[] magicNumbers = new byte[ZIP.length];
             raf.read( magicNumbers );
             if ( Arrays.equals( magicNumbers, ZIP ) ) {
                 // FIXME LOG
                 // System.out.println("I have found a ZIP file!");
                 return true;
             }
-        } catch ( FileNotFoundException e ) {
+        } catch (final FileNotFoundException e) {
             // TODO Auto-generated catch block
-        } catch ( IOException e ) {
+        } catch (final IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
