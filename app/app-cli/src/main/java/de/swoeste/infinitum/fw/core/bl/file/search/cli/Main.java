@@ -20,6 +20,7 @@ package de.swoeste.infinitum.fw.core.bl.file.search.cli;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -105,13 +106,15 @@ public class Main {
         System.out.println("Result:");
         final Queue<Resource> files = fsSearch.getFiles();
         for (final Resource resource : files) {
-            System.out.println(resource);
+            System.out.println(resource.getFilePathAsString());
         }
 
-        System.out.println("Failed:");
         final Queue<Resource> failedFiles = fsSearch.getFailedFiles();
-        for (final Resource resource : failedFiles) {
-            System.out.println(resource);
+        if (!failedFiles.isEmpty()) {
+            System.out.println("Failed:");
+            for (final Resource resource : failedFiles) {
+                System.out.println(resource.getFilePathAsString());
+            }
         }
     }
 
@@ -195,14 +198,14 @@ public class Main {
         // file - for filePath and fileName filter
         final Builder fileOption = Option.builder(OPT_FILE);
         fileOption.longOpt("file"); //$NON-NLS-1$
-        fileOption.desc("TODO");
+        fileOption.desc("a regular expression to match the file(s) name to search for");
         fileOption.hasArgs();
         options.addOption(fileOption.build());
 
         // content - for content search
         final Builder contentOption = Option.builder(OPT_CONTENT);
         contentOption.longOpt("content"); //$NON-NLS-1$
-        contentOption.desc("TODO");
+        contentOption.desc("a regular expression to match the file(s) content to search for");
         contentOption.hasArg();
         options.addOption(contentOption.build());
 
@@ -216,13 +219,13 @@ public class Main {
         // path - the root path to start searching
         final Builder searchThreadsOption = Option.builder(OPT_THREADS);
         searchThreadsOption.longOpt("threads"); //$NON-NLS-1$
-        searchThreadsOption.desc("TODO");
+        searchThreadsOption.desc(MessageFormat.format("the amount of threads used for parallel execution (default: {0})", DEFAULT_THREADS));
         searchThreadsOption.hasArg();
         options.addOption(searchThreadsOption.build());
 
         final Builder searchArchivesOption = Option.builder(OPT_SEARCH_ARCHIVES);
         searchArchivesOption.longOpt("search-archives"); //$NON-NLS-1$
-        searchArchivesOption.desc("enables search in archives, for example in JAR files");
+        searchArchivesOption.desc("enables search in archives, for example in a JAR");
         options.addOption(searchArchivesOption.build());
 
         return options;

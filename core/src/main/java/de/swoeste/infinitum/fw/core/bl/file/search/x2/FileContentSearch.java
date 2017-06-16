@@ -66,9 +66,9 @@ public class FileContentSearch {
         for (final Future<List<SearchResult>> future : this.futures) {
             try {
                 final List<SearchResult> futureResult = future.get();
-                System.out.println("finished");
                 result.addAll(futureResult);
             } catch (final InterruptedException e) {
+                Thread.currentThread().interrupt();
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (final ExecutionException e) {

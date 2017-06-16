@@ -44,6 +44,8 @@ public class ResourceContentAnalyzer implements ResourceAnalyzer {
         this.searchPattern = Pattern.compile(search);
     }
 
+    // TODO throw checked exception instead of IllegalStateEx...!
+
     /** {@inheritDoc} */
     @Override
     public List<SearchResult> analyze(final Resource resource) {
@@ -64,7 +66,7 @@ public class ResourceContentAnalyzer implements ResourceAnalyzer {
             return result;
         } catch (final IOException ex) {
             final String message = MessageFormat.format("Unable to analyze: {0}", resource); //$NON-NLS-1$
-            throw new IllegalArgumentException(message, ex);
+            throw new IllegalStateException(message, ex);
         }
     }
 
