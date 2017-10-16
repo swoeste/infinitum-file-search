@@ -61,6 +61,21 @@ public class FileSystemSearchConfiguration {
     }
 
     /**
+     * Constructor for a new FileSystemSearchConfiguration.
+     *
+     * @param path
+     * @param filters
+     * @param searchArchives
+     * @param includeSubDirectories
+     */
+    public FileSystemSearchConfiguration(final Path path, final List<ResourceFilter> filters, final boolean searchArchives, final boolean includeSubDirectories) {
+        this.path = path;
+        this.filters = filters;
+        this.searchArchives = searchArchives;
+        this.depth = includeSubDirectories ? Integer.MAX_VALUE : 1;
+    }
+
+    /**
      * @return the path
      */
     public Path getPath() {
