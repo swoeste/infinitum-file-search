@@ -24,14 +24,11 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import de.swoeste.infinitum.fw.core.bl.file.search.analyzer.ResourceContentAnalyzer;
+import de.swoeste.infinitum.fw.core.bl.file.search.executor.RunnableExecutor;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceNameFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.SearchResult;
-import de.swoeste.infinitum.fw.core.bl.file.search.x1.FileSystemSearch;
-import de.swoeste.infinitum.fw.core.bl.file.search.x1.FileSystemSearchConfiguration;
-import de.swoeste.infinitum.fw.core.bl.file.search.x2.FileContentSearch;
-import de.swoeste.infinitum.fw.core.bl.file.search.x2.FileContentSearchConfiguration;
 
 
 /**

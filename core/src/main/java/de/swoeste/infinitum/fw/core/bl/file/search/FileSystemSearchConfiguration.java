@@ -16,7 +16,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.swoeste.infinitum.fw.core.bl.file.search.x1;
+package de.swoeste.infinitum.fw.core.bl.file.search;
 
 import java.nio.file.Path;
 import java.text.MessageFormat;

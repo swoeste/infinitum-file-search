@@ -51,8 +51,8 @@ public class ResourceContentAnalyzer implements ResourceAnalyzer {
     public List<SearchResult> analyze(final Resource resource) {
         try {
             final List<SearchResult> result = new ArrayList<>();
-            final String contentToAnalyze = resource.getContentAsString();
 
+            final String contentToAnalyze = resource.getContentAsString();
             final Matcher matcher = this.searchPattern.matcher(contentToAnalyze);
             while (matcher.find()) {
                 final int start = matcher.start();

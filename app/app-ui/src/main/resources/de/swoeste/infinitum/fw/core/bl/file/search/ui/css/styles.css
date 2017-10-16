@@ -1,0 +1,9 @@
+.highlight {
+    -fx-fill: darkviolet;
+    -fx-font-weight: bold;
+    -rtfx-background-color: #f0f0f0;
+    -rtfx-underline-color: red;
+    -rtfx-underline-dash-array: 2 2;
+    -rtfx-underline-width: 1;
+    -rtfx-underline-cap: butt;
+}

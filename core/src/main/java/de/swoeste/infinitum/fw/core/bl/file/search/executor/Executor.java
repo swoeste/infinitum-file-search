@@ -16,7 +16,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.swoeste.infinitum.fw.core.bl.file.search;
+package de.swoeste.infinitum.fw.core.bl.file.search.executor;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;

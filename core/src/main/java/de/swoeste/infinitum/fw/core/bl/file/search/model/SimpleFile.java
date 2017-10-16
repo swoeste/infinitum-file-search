@@ -38,7 +38,7 @@ public class SimpleFile extends AbstractResource {
 
     /** {@inheritDoc} */
     @Override
-    public String getContentAsString() throws IOException {
+    public String getContentAsStringInternal() throws IOException {
         final byte[] bytes = Files.readAllBytes(getFilePath());
         return new String(bytes, getEncoding());
     }

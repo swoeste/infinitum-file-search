@@ -19,45 +19,28 @@
 package de.swoeste.infinitum.fw.core.bl.file.search.ui.model;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 /**
  * @author swoeste
  */
-public class UIPath {
+public class UIFilePath {
 
-    private final StringProperty path;
+    private final SimpleStringProperty filePath;
 
-    /**
-     * Default constructor.
-     */
-    public UIPath() {
+    public UIFilePath() {
         this(null);
     }
 
-    /**
-     * Constructor with some initial data.
-     *
-     * @param firstName
-     * @param lastName
-     */
-    public UIPath(final String path) {
-        this.path = new SimpleStringProperty(path);
-
+    public UIFilePath(final String filePath) {
+        this.filePath = new SimpleStringProperty(filePath);
     }
 
-    /**
-     * @return the path
-     */
-    public StringProperty getPath() {
-        return this.path;
+    public String getFilePath() {
+        return this.filePath.get();
     }
 
-    /**
-     * @param path
-     */
-    public void setPath(final String path) {
-        this.path.set(path);
+    public void setFilePath(final String filePath) {
+        this.filePath.set(filePath);
     }
 
 }

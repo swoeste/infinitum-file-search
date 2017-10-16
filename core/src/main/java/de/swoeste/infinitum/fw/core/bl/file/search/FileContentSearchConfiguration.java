@@ -16,13 +16,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.swoeste.infinitum.fw.core.bl.file.search.x2;
+package de.swoeste.infinitum.fw.core.bl.file.search;
 
 import java.text.MessageFormat;
 import java.util.Queue;
 
-import de.swoeste.infinitum.fw.core.bl.file.search.Executor;
 import de.swoeste.infinitum.fw.core.bl.file.search.analyzer.ResourceAnalyzer;
+import de.swoeste.infinitum.fw.core.bl.file.search.executor.Executor;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
 
 /**

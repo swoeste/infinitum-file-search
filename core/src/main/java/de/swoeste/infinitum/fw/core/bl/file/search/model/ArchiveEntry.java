@@ -30,7 +30,7 @@ import org.zeroturnaround.zip.ZipUtil;
  */
 public class ArchiveEntry extends AbstractResource {
 
-    private static final String DELIMITER = "!";  //$NON-NLS-1$
+    private static final String DELIMITER = "!";   //$NON-NLS-1$
 
     private final String        archiveEntryPath;
     private final String        archiveEntryName;
@@ -72,7 +72,7 @@ public class ArchiveEntry extends AbstractResource {
 
     /** {@inheritDoc} */
     @Override
-    public String getContentAsString() throws IOException {
+    public String getContentAsStringInternal() throws IOException {
         final byte[] bytes = ZipUtil.unpackEntry(super.getFilePath().toFile(), this.archiveEntryPath);
         return new String(bytes, getEncoding());
     }

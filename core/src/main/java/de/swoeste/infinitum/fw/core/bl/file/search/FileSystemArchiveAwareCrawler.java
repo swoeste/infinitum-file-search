@@ -12,7 +12,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package de.swoeste.infinitum.fw.core.bl.file.search.x1;
+package de.swoeste.infinitum.fw.core.bl.file.search;
 
 
 import java.io.BufferedInputStream;

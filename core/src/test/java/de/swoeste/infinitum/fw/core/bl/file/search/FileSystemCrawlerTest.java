@@ -32,8 +32,6 @@ import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceNameFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourcePathFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
-import de.swoeste.infinitum.fw.core.bl.file.search.x1.FileSystemSearch;
-import de.swoeste.infinitum.fw.core.bl.file.search.x1.FileSystemSearchConfiguration;
 
 /**
  * @author swoeste
