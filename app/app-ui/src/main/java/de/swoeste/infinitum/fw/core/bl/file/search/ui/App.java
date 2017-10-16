@@ -44,6 +44,7 @@ public class App extends Application {
     // controller (currently mixed)
     // - improve the highlighting (currently violet) and clean up
     // highlighting.css
+    // - remove prefilled test data
 
     private Stage                 primaryStage;
     private ApplicationController controller;
