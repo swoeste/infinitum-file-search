@@ -39,7 +39,7 @@ import de.swoeste.infinitum.fw.core.bl.file.search.FileContentSearchConfiguratio
 import de.swoeste.infinitum.fw.core.bl.file.search.FileSystemSearch;
 import de.swoeste.infinitum.fw.core.bl.file.search.FileSystemSearchConfiguration;
 import de.swoeste.infinitum.fw.core.bl.file.search.analyzer.ResourceContentAnalyzer;
-import de.swoeste.infinitum.fw.core.bl.file.search.executor.RunnableExecutor;
+import de.swoeste.infinitum.fw.core.bl.file.search.executor.SimpleExecutor;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceNameFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceNotFilter;
@@ -119,7 +119,7 @@ public class Main {
     }
 
     private static FileContentSearchConfiguration createFCSConfiguration(final CommandLine cmd, final FileSystemSearch search) {
-        final RunnableExecutor executor = RunnableExecutor.getInstance();
+        final SimpleExecutor executor = SimpleExecutor.getInstance();
         final ResourceContentAnalyzer analyzer = getResourceContentAnalyzer(cmd);
         final int threads = getThreads(cmd);
         final FileContentSearchConfiguration configuration = new FileContentSearchConfiguration(search.getFiles(), analyzer, executor, threads);

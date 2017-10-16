@@ -24,7 +24,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import de.swoeste.infinitum.fw.core.bl.file.search.analyzer.ResourceContentAnalyzer;
-import de.swoeste.infinitum.fw.core.bl.file.search.executor.RunnableExecutor;
+import de.swoeste.infinitum.fw.core.bl.file.search.executor.SimpleExecutor;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceNameFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
@@ -42,7 +42,7 @@ public class FileContentCrawlerTest extends AbstractCrawlerTest {
         final Queue<Resource> files = searchForFiles( ".*" );
 
         final String exp = "1-1";
-        final FileContentSearchConfiguration configuration = new FileContentSearchConfiguration(files, new ResourceContentAnalyzer(exp), RunnableExecutor.getInstance(), 4);
+        final FileContentSearchConfiguration configuration = new FileContentSearchConfiguration(files, new ResourceContentAnalyzer(exp), SimpleExecutor.getInstance(), 4);
         final FileContentSearch search = new FileContentSearch( configuration );
         search.search();
 
@@ -64,7 +64,7 @@ public class FileContentCrawlerTest extends AbstractCrawlerTest {
 
         final String exp = ".*";
         final FileContentSearchConfiguration configuration = new FileContentSearchConfiguration( files,
-                new ResourceContentAnalyzer( exp ), RunnableExecutor.getInstance(), 4 );
+                new ResourceContentAnalyzer( exp ), SimpleExecutor.getInstance(), 4 );
         final FileContentSearch search = new FileContentSearch( configuration );
         search.search();
 
@@ -82,7 +82,7 @@ public class FileContentCrawlerTest extends AbstractCrawlerTest {
 
         final String exp = "Lorem";
         final FileContentSearchConfiguration configuration = new FileContentSearchConfiguration( files,
-                new ResourceContentAnalyzer( exp ), RunnableExecutor.getInstance(), 4 );
+                new ResourceContentAnalyzer( exp ), SimpleExecutor.getInstance(), 4 );
         final FileContentSearch search = new FileContentSearch( configuration );
         search.search();
 
@@ -100,7 +100,7 @@ public class FileContentCrawlerTest extends AbstractCrawlerTest {
 
         final String exp = "rebum\\.\\s*Stet";
         final FileContentSearchConfiguration configuration = new FileContentSearchConfiguration( files,
-                new ResourceContentAnalyzer( exp ), RunnableExecutor.getInstance(), 4 );
+                new ResourceContentAnalyzer( exp ), SimpleExecutor.getInstance(), 4 );
         final FileContentSearch search = new FileContentSearch( configuration );
         search.search();
 

@@ -12,29 +12,16 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package de.swoeste.infinitum.fw.core.bl.file.search.executor;
-
-
-import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
+package de.swoeste.infinitum.fw.core.bl.file.search.ui.controller;
 
 
 /**
  * @author swoeste
+ *
  */
-public interface Executor {
+public class FileSearchController {
 
-    /**
-     * @param callable
-     * @return
-     */
-    <T> Future<T> submit( final Callable<T> callable );
-
-    /**
-     *
-     * @param runnable
-     * @return
-     */
-    Future<?> submit( final Runnable runnable );
+    // TODO maybe this is not necessary because most of the logic will be moved to the 2 new tasks,
+    // FileSearchViewController should look mucher cleaner afterwards.
 
 }

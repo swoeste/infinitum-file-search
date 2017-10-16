@@ -20,7 +20,7 @@ import de.swoeste.infinitum.fw.core.bl.file.search.FileContentSearchConfiguratio
 import de.swoeste.infinitum.fw.core.bl.file.search.FileSystemSearch;
 import de.swoeste.infinitum.fw.core.bl.file.search.FileSystemSearchConfiguration;
 import de.swoeste.infinitum.fw.core.bl.file.search.analyzer.ResourceContentAnalyzer;
-import de.swoeste.infinitum.fw.core.bl.file.search.executor.RunnableExecutor;
+import de.swoeste.infinitum.fw.core.bl.file.search.executor.SimpleExecutor;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourcePathFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
@@ -39,11 +39,11 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
-public class ApplicationController {
+public class FileSearchViewController {
 
     // TODO move search logic to separate class to keep this slim
 
-    private final RunnableExecutor   executor = RunnableExecutor.getInstance();
+    private final SimpleExecutor   executor = SimpleExecutor.getInstance();
 
     private Stage                    primaryStage;
 
