@@ -13,6 +13,7 @@ import java.util.Queue;
 import org.apache.commons.lang3.StringUtils;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
+import org.fxmisc.richtext.NavigationActions.SelectionPolicy;
 
 import de.swoeste.infinitum.fw.core.bl.file.search.FileContentSearch;
 import de.swoeste.infinitum.fw.core.bl.file.search.FileContentSearchConfiguration;
@@ -148,6 +149,8 @@ public class ApplicationController {
                 final int currEnd = pair.getValue().intValue();
                 this.searchContentSelectedFilePathContent.setStyleClass(currStart, currEnd, "highlight"); //$NON-NLS-1$
             }
+
+            this.searchContentSelectedFilePathContent.start(SelectionPolicy.CLEAR);
         }
     }
 
