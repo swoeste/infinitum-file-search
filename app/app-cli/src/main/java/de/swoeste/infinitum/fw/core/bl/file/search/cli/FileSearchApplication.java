@@ -50,7 +50,7 @@ import de.swoeste.infinitum.fw.core.bl.file.search.model.SearchResult;
 /**
  * @author swoeste
  */
-public class Main {
+public class FileSearchApplication {
 
     // TODO - replace system.out with simple logger?
 

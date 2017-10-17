@@ -22,23 +22,14 @@
             <groupId>de.swoeste.infinitum-file-search.app</groupId>
             <artifactId>app-ui</artifactId>
             <version>${project.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-		<!-- Logging -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
+            <classifier>uber</classifier>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
+            <groupId>de.swoeste.infinitum-file-search.app</groupId>
+            <artifactId>app-cli</artifactId>
+            <version>${project.version}</version>
+            <classifier>uber</classifier>
             <scope>provided</scope>
         </dependency>
 

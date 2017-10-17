@@ -2,29 +2,29 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-	<!-- Parent -->
+    <!-- Parent -->
     <parent>
         <groupId>de.swoeste.infinitum.app</groupId>
         <artifactId>infinitum-file-search.app-aggr</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-	<!-- Project -->
+    <!-- Project -->
     <groupId>de.swoeste.infinitum-file-search.app</groupId>
     <artifactId>app-cli</artifactId>
     <packaging>jar</packaging>
 
-	<!-- Dependencies -->
+    <!-- Dependencies -->
     <dependencies>
 
-		<!-- Infinitum -->
+        <!-- Infinitum -->
         <dependency>
             <groupId>de.swoeste.infinitum-file-search.core</groupId>
             <artifactId>file.search</artifactId>
             <version>${project.version}</version>
         </dependency>
 
-		<!-- Logging -->
+        <!-- Logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -46,13 +46,13 @@
 
     </dependencies>
 
-	<!-- Build -->
+    <!-- Build -->
     <build>
         <finalName>infinitum</finalName>
 
         <resources>
             <resource>
-				<!-- Add the resources folder by default -->
+                <!-- Add the resources folder by default -->
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
@@ -60,25 +60,36 @@
 
         <plugins>
             <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.0.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>de.swoeste.infinitum.fw.core.bl.file.search.cli.Main</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>make-assembly</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>single</goal>
+                            <goal>shade</goal>
                         </goals>
+                        <configuration>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <shadedClassifierName>uber</shadedClassifierName>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <manifestEntries>
+                                        <Main-Class>de.swoeste.infinitum.fw.core.bl.file.search.cli.FileSearchApplication</Main-Class>
+                                    </manifestEntries>
+                                </transformer>
+                            </transformers>
+                            <filters>
+                                <filter>
+                                    <!-- exclude signature files from signed dependencies/jars, else repackaging fails with security exception -->
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
