@@ -39,15 +39,12 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-
         </dependency>
 
         <!-- JavaFX Custom Controls -->
         <dependency>
             <groupId>org.fxmisc.richtext</groupId>
             <artifactId>richtextfx</artifactId>
-            <version>0.6.10</version>
-
         </dependency>
 
     </dependencies>

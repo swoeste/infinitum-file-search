@@ -1,4 +1,4 @@
-/*
+/*-
  * Copyright (C) 2017 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license
@@ -31,7 +31,7 @@ import org.apache.commons.lang3.StringUtils;
 public abstract class AbstractResource implements Resource {
 
     private static final String CR_LF = "\r\n"; //$NON-NLS-1$
-    private static final String LF    = "\n";     //$NON-NLS-1$
+    private static final String LF    = "\n";       //$NON-NLS-1$
 
     private final Path          filePath;
     private final Charset       encoding;

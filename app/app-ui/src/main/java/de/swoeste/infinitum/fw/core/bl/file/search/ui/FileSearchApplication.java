@@ -1,4 +1,4 @@
-/*
+/*-
  * Copyright (C) 2017 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license
@@ -38,9 +38,6 @@ public class FileSearchApplication extends Application {
     // - check if it is possible to have columns resized on window resize
     // - clean up fxml file, remove everything what is not required
     // - code review, clean up, java doc and sonar
-    // - license dateien mit
-    // http://www.mojohaus.org/license-maven-plugin/update-file-header-mojo.html
-    // anpassen
 
     private static final SimpleExecutor EXECUTOR = SimpleExecutor.getInstance();
 

@@ -1,4 +1,4 @@
-/*
+/*-
  * Copyright (C) 2017 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license
@@ -30,7 +30,7 @@ import org.zeroturnaround.zip.ZipUtil;
  */
 public class ArchiveEntry extends AbstractResource {
 
-    private static final String DELIMITER = "!";   //$NON-NLS-1$
+    private static final String DELIMITER = "!";    //$NON-NLS-1$
 
     private final String        archiveEntryPath;
     private final String        archiveEntryName;
