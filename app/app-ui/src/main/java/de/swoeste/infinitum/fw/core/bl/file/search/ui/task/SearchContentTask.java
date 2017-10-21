@@ -40,13 +40,13 @@ import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.SearchResult;
 import de.swoeste.infinitum.fw.core.bl.file.search.ui.model.UIFileContent;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
+import javafx.scene.Node;
 import javafx.util.Pair;
 
 /**
  * @author swoeste
  */
-public class SearchContentTask extends Task<Void> {
+public class SearchContentTask extends AbstractNodeDisablingTask<Void> {
 
     private final ObservableList<UIFileContent> searchResults;
     private final String                        searchPath;
@@ -56,8 +56,9 @@ public class SearchContentTask extends Task<Void> {
     private final boolean                       includeSubDirectories;
     private final Executor                      executor;
 
-    public SearchContentTask(final ObservableList<UIFileContent> searchResults, final String searchPath, final String searchFilePattern, final String searchContentPattern,
-            final boolean includeArchives, final boolean includeSubDirectories, final Executor executor) {
+    public SearchContentTask(final List<Node> nodes, final ObservableList<UIFileContent> searchResults, final String searchPath, final String searchFilePattern,
+            final String searchContentPattern, final boolean includeArchives, final boolean includeSubDirectories, final Executor executor) {
+        super(nodes);
         this.searchResults = searchResults;
         this.searchPath = searchPath;
         this.searchFilePattern = searchFilePattern;
@@ -86,7 +87,7 @@ public class SearchContentTask extends Task<Void> {
 
     /** {@inheritDoc} */
     @Override
-    protected Void call() throws Exception {
+    protected Void callInternal() throws Exception {
         updateMessage("Status: Searching for files ...");
         final FileSystemSearch fileSearch = new FileSystemSearch(createFileSearchConfig());
         fileSearch.search();

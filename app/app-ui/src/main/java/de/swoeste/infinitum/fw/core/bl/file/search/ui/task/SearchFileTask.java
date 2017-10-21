@@ -30,12 +30,12 @@ import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourcePathFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
 import de.swoeste.infinitum.fw.core.bl.file.search.ui.model.UIFilePath;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
+import javafx.scene.Node;
 
 /**
  * @author swoeste
  */
-public class SearchFileTask extends Task<Void> {
+public class SearchFileTask extends AbstractNodeDisablingTask<Void> {
 
     private final ObservableList<UIFilePath> searchResults;
     private final String                     searchPath;
@@ -43,8 +43,9 @@ public class SearchFileTask extends Task<Void> {
     private final boolean                    includeArchives;
     private final boolean                    includeSubDirectories;
 
-    public SearchFileTask(final ObservableList<UIFilePath> searchResults, final String searchPath, final String searchFilePattern, final boolean includeArchives,
-            final boolean includeSubDirectories) {
+    public SearchFileTask(final List<Node> nodes, final ObservableList<UIFilePath> searchResults, final String searchPath, final String searchFilePattern,
+            final boolean includeArchives, final boolean includeSubDirectories) {
+        super(nodes);
         this.searchResults = searchResults;
         this.searchPath = searchPath;
         this.searchFilePattern = searchFilePattern;
@@ -64,7 +65,7 @@ public class SearchFileTask extends Task<Void> {
 
     /** {@inheritDoc} */
     @Override
-    protected Void call() throws Exception {
+    protected Void callInternal() throws Exception {
         updateMessage("Status: Searching ...");
         updateProgress(0, 1);
 

@@ -1,6 +1,7 @@
 package de.swoeste.infinitum.fw.core.bl.file.search.ui.view;
 
 import java.io.File;
+import java.util.Arrays;
 
 import org.apache.commons.lang3.StringUtils;
 import org.fxmisc.richtext.CodeArea;
@@ -14,12 +15,17 @@ import de.swoeste.infinitum.fw.core.bl.file.search.ui.task.SearchContentTask;
 import de.swoeste.infinitum.fw.core.bl.file.search.ui.task.SearchFileTask;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -39,6 +45,8 @@ public class FileSearchViewController {
     @FXML
     private CheckBox                 searchFileCheckBoxIncludeArchives;
     @FXML
+    private Button                   searchFileButton;
+    @FXML
     private TableView<UIFilePath>    searchFileTable;
     @FXML
     private TableColumn<?, ?>        searchFileTableColumnFilePath;
@@ -53,6 +61,8 @@ public class FileSearchViewController {
     private CheckBox                 searchContentCheckBoxIncludeSubDirectories;
     @FXML
     private CheckBox                 searchContentCheckBoxIncludeArchives;
+    @FXML
+    private Button                   searchContentButton;
     @FXML
     private TableView<UIFileContent> searchContentTable;
     @FXML
@@ -89,10 +99,40 @@ public class FileSearchViewController {
 
     @FXML
     void searchFile(final ActionEvent event) {
+        this.searchFileButton.setDisable(true);
         this.searchFileTable.getItems().clear();
 
-        final SearchFileTask task = new SearchFileTask(this.searchFileTable.getItems(), this.searchFileTextPath.getText(), this.searchFileTextFile.getText(),
-                this.searchFileCheckBoxIncludeArchives.isSelected(), this.searchFileCheckBoxIncludeSubDirectories.isSelected());
+        final SearchFileTask task = new SearchFileTask(Arrays.asList(this.searchFileButton, this.searchContentButton), this.searchFileTable.getItems(),
+                this.searchFileTextPath.getText(), this.searchFileTextFile.getText(), this.searchFileCheckBoxIncludeArchives.isSelected(),
+                this.searchFileCheckBoxIncludeSubDirectories.isSelected());
+
+        this.searchStatusProgress.progressProperty().bind(task.progressProperty());
+        this.searchStatusProgressMessage.textProperty().bind(task.messageProperty());
+
+        this.executor.submit(task);
+    }
+
+    @FXML
+    void searchFileTableOnKeyPressed(final KeyEvent event) {
+        if (event.isControlDown() && (event.getCode() == KeyCode.C)) {
+            final UIFilePath selectedItem = this.searchFileTable.getSelectionModel().getSelectedItem();
+            pasteToClipboard(selectedItem.getFilePath());
+        }
+    }
+
+    @FXML
+    void searchContentBrowse(final ActionEvent event) {
+        final String directory = browseDirectory();
+        this.searchContentTextPath.setText(directory);
+    }
+
+    @FXML
+    void searchContent(final ActionEvent event) {
+        this.searchContentTable.getItems().clear();
+
+        final SearchContentTask task = new SearchContentTask(Arrays.asList(this.searchFileButton, this.searchContentButton), this.searchContentTable.getItems(),
+                this.searchContentTextPath.getText(), this.searchContentTextFile.getText(), this.searchContentTextContent.getText(),
+                this.searchContentCheckBoxIncludeArchives.isSelected(), this.searchContentCheckBoxIncludeSubDirectories.isSelected(), this.executor);
 
         this.searchStatusProgress.progressProperty().bind(task.progressProperty());
         this.searchStatusProgressMessage.textProperty().bind(task.messageProperty());
@@ -120,23 +160,11 @@ public class FileSearchViewController {
     }
 
     @FXML
-    void searchContent(final ActionEvent event) {
-        this.searchContentTable.getItems().clear();
-
-        final SearchContentTask task = new SearchContentTask(this.searchContentTable.getItems(), this.searchContentTextPath.getText(), this.searchContentTextFile.getText(),
-                this.searchContentTextContent.getText(), this.searchContentCheckBoxIncludeArchives.isSelected(), this.searchContentCheckBoxIncludeSubDirectories.isSelected(),
-                this.executor);
-
-        this.searchStatusProgress.progressProperty().bind(task.progressProperty());
-        this.searchStatusProgressMessage.textProperty().bind(task.messageProperty());
-
-        this.executor.submit(task);
-    }
-
-    @FXML
-    void searchContentBrowse(final ActionEvent event) {
-        final String directory = browseDirectory();
-        this.searchContentTextPath.setText(directory);
+    void searchContentTableOnKeyPressed(final KeyEvent event) {
+        if (event.isControlDown() && (event.getCode() == KeyCode.COPY)) {
+            final UIFileContent selectedItem = this.searchContentTable.getSelectionModel().getSelectedItem();
+            pasteToClipboard(selectedItem.getFilePath());
+        }
     }
 
     private String browseDirectory() {
@@ -147,6 +175,13 @@ public class FileSearchViewController {
         } else {
             return selectedDirectory.getAbsolutePath();
         }
+    }
+
+    private void pasteToClipboard(final String value) {
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(value);
+        clipboard.setContent(content);
     }
 
 }

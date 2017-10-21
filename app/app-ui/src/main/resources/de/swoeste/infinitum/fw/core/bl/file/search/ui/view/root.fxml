@@ -37,12 +37,12 @@
                                                 <TextField fx:id="searchFileTextFile" layoutX="45.0" layoutY="55.0" prefHeight="25.0" prefWidth="470.0" />
                                                 <CheckBox fx:id="searchFileCheckBoxIncludeSubDirectories" layoutX="10.0" layoutY="95.0" mnemonicParsing="false" text="include sub-directories" />
                                                 <CheckBox fx:id="searchFileCheckBoxIncludeArchives" layoutX="170.0" layoutY="95.0" mnemonicParsing="false" text="include archives" />
-                                                <Button layoutX="525.0" layoutY="90.0" mnemonicParsing="false" onAction="#searchFile" prefHeight="25.0" prefWidth="65.0" text="Search" textAlignment="CENTER" />
+                                                <Button fx:id="searchFileButton" layoutX="525.0" layoutY="90.0" mnemonicParsing="false" onAction="#searchFile" prefHeight="25.0" prefWidth="65.0" text="Search" textAlignment="CENTER" />
                                             </children>
                                         </Pane>
                                         <AnchorPane prefHeight="340.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
                                             <children>
-                                                <TableView fx:id="searchFileTable" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <TableView fx:id="searchFileTable" onKeyPressed="#searchFileTableOnKeyPressed" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                     <columns>
                                                         <TableColumn fx:id="searchFileTableColumnFilePath" editable="false" minWidth="100.0" prefWidth="600.0" sortable="false" text="Path">
                                                             <cellValueFactory>
@@ -76,14 +76,14 @@
                                                 <TextField fx:id="searchContentTextContent" layoutX="65.0" layoutY="95.0" prefHeight="25.0" prefWidth="450.0" />
                                                 <CheckBox fx:id="searchContentCheckBoxIncludeSubDirectories" layoutX="10.0" layoutY="140.0" mnemonicParsing="false" text="include sub-directories" />
                                                 <CheckBox fx:id="searchContentCheckBoxIncludeArchives" layoutX="170.0" layoutY="140.0" mnemonicParsing="false" text="include archives" />
-                                                <Button layoutX="525.0" layoutY="135.0" mnemonicParsing="false" onAction="#searchContent" prefHeight="25.0" prefWidth="65.0" text="Search" />
+                                                <Button fx:id="searchContentButton" layoutX="525.0" layoutY="135.0" mnemonicParsing="false" onAction="#searchContent" prefHeight="25.0" prefWidth="65.0" text="Search" />
                                             </children>
                                         </Pane>
                                         <SplitPane dividerPositions="0.4" orientation="VERTICAL" prefHeight="300.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
                                             <items>
                                                 <AnchorPane>
                                                     <children>
-                                                        <TableView fx:id="searchContentTable" onMouseClicked="#searchContentTableOnMouseClicked" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <TableView fx:id="searchContentTable" onMouseClicked="#searchContentTableOnMouseClicked" onKeyPressed="#searchContentTableOnKeyPressed" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <columns>
                                                                 <TableColumn fx:id="searchContentTableColumnFilePath" editable="false" minWidth="100.0" prefWidth="550.0" sortable="false" text="Path">
                                                                     <cellValueFactory>
