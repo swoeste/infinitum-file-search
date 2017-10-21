@@ -18,7 +18,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.fxmisc.richtext.CodeArea?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.swoeste.infinitum.fw.core.bl.file.search.ui.view.FileSearchViewController">
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="de.swoeste.infinitum.fw.core.bl.file.search.ui.view.FileSearchViewController">
     <center>
         <TabPane prefHeight="200.0" prefWidth="200.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
@@ -26,30 +27,40 @@
                     <content>
                         <AnchorPane prefHeight="500.0" prefWidth="600.0">
                             <children>
-                                <VBox prefHeight="460.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <VBox prefHeight="460.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                    AnchorPane.topAnchor="0.0">
                                     <children>
-                                        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="600.0" VBox.vgrow="NEVER">
+                                        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="125.0" prefWidth="600.0"
+                                            VBox.vgrow="NEVER">
                                             <children>
                                                 <Label layoutX="10.0" layoutY="20.0" text="Path:" />
                                                 <TextField fx:id="searchFileTextPath" layoutX="45.0" layoutY="15.0" prefHeight="25.0" prefWidth="470.0" />
-                                                <Button layoutX="525.0" layoutY="15.0" mnemonicParsing="false" onAction="#searchFileBrowse" prefHeight="25.0" prefWidth="65.0" text="Browse ..." textAlignment="CENTER" />
+                                                <Button layoutX="525.0" layoutY="15.0" mnemonicParsing="false" onAction="#searchFileBrowse" prefHeight="25.0" prefWidth="65.0"
+                                                    text="Browse ..." textAlignment="CENTER" />
                                                 <Label layoutX="10.0" layoutY="60.0" text="File:" />
                                                 <TextField fx:id="searchFileTextFile" layoutX="45.0" layoutY="55.0" prefHeight="25.0" prefWidth="470.0" />
-                                                <CheckBox fx:id="searchFileCheckBoxIncludeSubDirectories" layoutX="10.0" layoutY="95.0" mnemonicParsing="false" text="include sub-directories" />
+                                                <CheckBox fx:id="searchFileCheckBoxIncludeSubDirectories" layoutX="10.0" layoutY="95.0" mnemonicParsing="false"
+                                                    text="include sub-directories" />
                                                 <CheckBox fx:id="searchFileCheckBoxIncludeArchives" layoutX="170.0" layoutY="95.0" mnemonicParsing="false" text="include archives" />
-                                                <Button fx:id="searchFileButton" layoutX="525.0" layoutY="90.0" mnemonicParsing="false" onAction="#searchFile" prefHeight="25.0" prefWidth="65.0" text="Search" textAlignment="CENTER" />
+                                                <Button fx:id="searchFileButton" layoutX="525.0" layoutY="90.0" mnemonicParsing="false" onAction="#searchFile" prefHeight="25.0"
+                                                    prefWidth="65.0" text="Search" textAlignment="CENTER" />
                                             </children>
                                         </Pane>
                                         <AnchorPane prefHeight="340.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
                                             <children>
-                                                <TableView fx:id="searchFileTable" onKeyPressed="#searchFileTableOnKeyPressed" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <TableView fx:id="searchFileTable" onKeyPressed="#searchFileTableOnKeyPressed" AnchorPane.bottomAnchor="0.0"
+                                                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                     <columns>
-                                                        <TableColumn fx:id="searchFileTableColumnFilePath" editable="false" minWidth="100.0" prefWidth="600.0" sortable="false" text="Path">
+                                                        <TableColumn fx:id="searchFileTableColumnFilePath" editable="false" minWidth="100.0" prefWidth="600.0" sortable="false"
+                                                            text="Path">
                                                             <cellValueFactory>
                                                                 <PropertyValueFactory property="filePath" />
                                                             </cellValueFactory>
                                                         </TableColumn>
                                                     </columns>
+                                                    <columnResizePolicy>
+                                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                    </columnResizePolicy>
                                                 </TableView>
                                             </children>
                                         </AnchorPane>
@@ -63,45 +74,57 @@
                     <content>
                         <AnchorPane prefHeight="500.0" prefWidth="600.0">
                             <children>
-                                <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                    AnchorPane.topAnchor="0.0">
                                     <children>
-                                        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="170.0" prefWidth="600.0" VBox.vgrow="NEVER">
+                                        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="170.0" prefWidth="600.0"
+                                            VBox.vgrow="NEVER">
                                             <children>
                                                 <Label layoutX="10.0" layoutY="20.0" text="Path:" />
                                                 <TextField fx:id="searchContentTextPath" layoutX="65.0" layoutY="15.0" prefHeight="25.0" prefWidth="450.0" />
-                                                <Button layoutX="525.0" layoutY="15.0" mnemonicParsing="false" onAction="#searchContentBrowse" prefHeight="25.0" prefWidth="65.0" text="Browse ..." />
+                                                <Button layoutX="525.0" layoutY="15.0" mnemonicParsing="false" onAction="#searchContentBrowse" prefHeight="25.0" prefWidth="65.0"
+                                                    text="Browse ..." />
                                                 <Label layoutX="10.0" layoutY="60.0" text="File:" />
                                                 <TextField fx:id="searchContentTextFile" layoutX="65.0" layoutY="55.0" prefHeight="25.0" prefWidth="450.0" />
                                                 <Label layoutX="10.0" layoutY="100.0" text="Content:" />
                                                 <TextField fx:id="searchContentTextContent" layoutX="65.0" layoutY="95.0" prefHeight="25.0" prefWidth="450.0" />
-                                                <CheckBox fx:id="searchContentCheckBoxIncludeSubDirectories" layoutX="10.0" layoutY="140.0" mnemonicParsing="false" text="include sub-directories" />
+                                                <CheckBox fx:id="searchContentCheckBoxIncludeSubDirectories" layoutX="10.0" layoutY="140.0" mnemonicParsing="false"
+                                                    text="include sub-directories" />
                                                 <CheckBox fx:id="searchContentCheckBoxIncludeArchives" layoutX="170.0" layoutY="140.0" mnemonicParsing="false" text="include archives" />
-                                                <Button fx:id="searchContentButton" layoutX="525.0" layoutY="135.0" mnemonicParsing="false" onAction="#searchContent" prefHeight="25.0" prefWidth="65.0" text="Search" />
+                                                <Button fx:id="searchContentButton" layoutX="525.0" layoutY="135.0" mnemonicParsing="false" onAction="#searchContent"
+                                                    prefHeight="25.0" prefWidth="65.0" text="Search" />
                                             </children>
                                         </Pane>
                                         <SplitPane dividerPositions="0.4" orientation="VERTICAL" prefHeight="300.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
                                             <items>
                                                 <AnchorPane>
                                                     <children>
-                                                        <TableView fx:id="searchContentTable" onMouseClicked="#searchContentTableOnMouseClicked" onKeyPressed="#searchContentTableOnKeyPressed" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <TableView fx:id="searchContentTable" onKeyPressed="#searchContentTableOnKeyPressed" onMouseClicked="#searchContentTableOnMouseClicked"
+                                                            AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <columns>
-                                                                <TableColumn fx:id="searchContentTableColumnFilePath" editable="false" minWidth="100.0" prefWidth="550.0" sortable="false" text="Path">
+                                                                <TableColumn fx:id="searchContentTableColumnFilePath" editable="false" maxWidth="1.7976931348623157E308"
+                                                                    minWidth="50.0" prefWidth="550.0" sortable="false" text="Path">
                                                                     <cellValueFactory>
                                                                         <PropertyValueFactory property="filePath" />
                                                                     </cellValueFactory>
                                                                 </TableColumn>
-                                                                <TableColumn fx:id="searchContentTableColumnResultPositionsCount" editable="false" minWidth="50.0" prefWidth="50.0" sortable="false" text="Match">
+                                                                <TableColumn fx:id="searchContentTableColumnResultPositionsCount" editable="false" maxWidth="50.0"
+                                                                    minWidth="50.0" prefWidth="50.0" sortable="false" text="Match">
                                                                     <cellValueFactory>
                                                                         <PropertyValueFactory property="resultPositionsCount" />
                                                                     </cellValueFactory>
                                                                 </TableColumn>
                                                             </columns>
+                                                            <columnResizePolicy>
+                                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                            </columnResizePolicy>
                                                         </TableView>
                                                     </children>
                                                 </AnchorPane>
                                                 <AnchorPane>
                                                     <children>
-                                                          <CodeArea fx:id="searchContentSelectedFilePathContent" editable="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                        <CodeArea fx:id="searchContentSelectedFilePathContent" editable="false" AnchorPane.bottomAnchor="0.0"
+                                                            AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                     </children>
                                                 </AnchorPane>
                                             </items>
@@ -115,16 +138,16 @@
             </tabs>
         </TabPane>
     </center>
-   <bottom>
-      <AnchorPane BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="searchStatusProgressMessage" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="4.0" />
-            <ProgressBar fx:id="searchStatusProgress" prefWidth="200.0" progress="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="4.0">
-               <padding>
-                  <Insets bottom="2.0" top="2.0" />
-               </padding>
-            </ProgressBar>
-         </children>
-      </AnchorPane>
-   </bottom>
+    <bottom>
+        <AnchorPane BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="searchStatusProgressMessage" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="4.0" />
+                <ProgressBar fx:id="searchStatusProgress" prefWidth="200.0" progress="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="4.0">
+                    <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                    </padding>
+                </ProgressBar>
+            </children>
+        </AnchorPane>
+    </bottom>
 </BorderPane>

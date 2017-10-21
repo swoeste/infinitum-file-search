@@ -20,7 +20,6 @@ package de.swoeste.infinitum.fw.core.bl.file.search;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.file.FileVisitResult;
@@ -31,6 +30,9 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.ArchiveEntry;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
@@ -40,7 +42,10 @@ import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
  */
 public class FileSystemArchiveAwareCrawler extends FileSystemCrawler {
 
-    private static final byte[] ZIP = { (byte) 0x50, (byte) 0x4B, (byte) 0x03, (byte) 0x04 };
+    private static final Logger LOG       = LoggerFactory.getLogger(FileSystemArchiveAwareCrawler.class);
+
+    private static final byte[] ZIP       = { (byte) 0x50, (byte) 0x4B, (byte) 0x03, (byte) 0x04 };
+    private static final String READ_MODE = "r";                                                                                                                                                                                                                                                                                                                                                                                                                                                                         //$NON-NLS-1$
 
     /**
      * Constructor for a new FileSystemArchiveAwareCrawler.
@@ -54,55 +59,36 @@ public class FileSystemArchiveAwareCrawler extends FileSystemCrawler {
     /** {@inheritDoc} */
     @Override
     public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs) throws IOException {
-        // FIXME, IMPROVE ERROR HANDLING
         try {
-
-            if (file.toFile().isFile()) {
-                if (isArchive(file)) {
-                    visitArchive(file);
-                }
-
-                // add the archive itself
-                // TODO what was this used for?
-                // final SimpleFile archiveFile = new SimpleFile( file );
-                // addResource( archiveFile );
+            if (file.toFile().isFile() && isArchive(file)) {
+                visitArchive(file);
             }
-
-        } catch (Exception e) {
-            // FIXME LOG
-            // TODO Auto-generated catch block
-            System.out.println("Error reading " + file);
-            // e.printStackTrace();
+        } catch (Exception ex) {
+            LOG.error("Unable to visit possible archive file \"{}\"", file, ex); //$NON-NLS-1$
+            // re-throw the exception, it will be handled by the
+            // 'visitFileFailed' method in super class
+            throw ex;
         }
 
         return super.visitFile(file, attrs);
     }
 
-    private boolean isArchive(final Path file) {
-        try (RandomAccessFile raf = new RandomAccessFile(file.toFile(), "r")) {
+    private boolean isArchive(final Path file) throws IOException {
+        try (RandomAccessFile raf = new RandomAccessFile(file.toFile(), READ_MODE)) {
             final byte[] magicNumbers = new byte[ZIP.length];
             raf.read(magicNumbers);
             if (Arrays.equals(magicNumbers, ZIP)) {
-                // FIXME LOG
-                // System.out.println("I have found a ZIP file!");
+                LOG.debug("Identified ZIP: {}", file); //$NON-NLS-1$
                 return true;
             }
-        } catch (final FileNotFoundException e) {
-            // TODO Auto-generated catch block
-        } catch (final IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (IOException ex) {
+            LOG.error("Unable to check if the file \"{}\" is an archive", file, ex); //$NON-NLS-1$
+            throw ex;
         }
         return false;
     }
 
-    private void addResource(final Resource archiveFile) {
-        if (accept(archiveFile)) {
-            getFiles().add(archiveFile);
-        }
-    }
-
-    public void visitArchive(final Path archive) throws IOException {
+    private void visitArchive(final Path archive) throws IOException {
         try (final FileInputStream fis = new FileInputStream(archive.toFile()); final ZipInputStream zis = new ZipInputStream(new BufferedInputStream(fis))) {
             ZipEntry entry;
             while ((entry = zis.getNextEntry()) != null) {
@@ -111,7 +97,12 @@ public class FileSystemArchiveAwareCrawler extends FileSystemCrawler {
                 }
             }
         }
+    }
 
+    private void addResource(final Resource archiveFile) {
+        if (accept(archiveFile)) {
+            getFiles().add(archiveFile);
+        }
     }
 
 }

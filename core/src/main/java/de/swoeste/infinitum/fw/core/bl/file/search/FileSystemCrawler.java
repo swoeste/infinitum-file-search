@@ -37,6 +37,8 @@ import de.swoeste.infinitum.fw.core.bl.file.search.model.SimpleFile;
  */
 public class FileSystemCrawler extends SimpleFileVisitor<Path> {
 
+    // FIXME logging!
+
     private final List<ResourceFilter> filters;
     private final Queue<Resource>      files;
     private final Queue<Resource>      failedFiles;

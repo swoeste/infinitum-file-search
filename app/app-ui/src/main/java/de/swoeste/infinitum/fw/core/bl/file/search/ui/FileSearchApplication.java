@@ -35,7 +35,8 @@ import javafx.stage.Stage;
 public class FileSearchApplication extends Application {
 
     // General TODO List
-    // - check if it is possible to have columns resized on window resize
+    // - add section to display failed files
+    // - check for general exception handling
     // - clean up fxml file, remove everything what is not required
     // - code review, clean up, java doc and sonar
 

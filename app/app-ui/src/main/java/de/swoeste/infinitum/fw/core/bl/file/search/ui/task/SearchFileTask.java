@@ -67,7 +67,6 @@ public class SearchFileTask extends AbstractNodeDisablingTask<Void> {
     @Override
     protected Void callInternal() throws Exception {
         updateMessage("Status: Searching ...");
-        updateProgress(0, 1);
 
         final FileSystemSearch search = new FileSystemSearch(createFileSearchConfig());
         search.search();
