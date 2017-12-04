@@ -32,6 +32,8 @@ import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
  */
 public class FileSystemSearch {
 
+    // TODO java doc
+
     private final FileSystemSearchConfiguration configuration;
     private final FileSystemCrawler             crawler;
 

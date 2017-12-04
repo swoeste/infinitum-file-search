@@ -23,6 +23,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
+ * This represents a concrete file from a file storage.
+ *
  * @author swoeste
  */
 public class SimpleFile extends AbstractResource {
@@ -31,6 +33,7 @@ public class SimpleFile extends AbstractResource {
      * Constructor for a new SimpleFile.
      *
      * @param filePath
+     *            the full qualified path representing this file (including the file name)
      */
     public SimpleFile(final Path filePath) {
         super(filePath);

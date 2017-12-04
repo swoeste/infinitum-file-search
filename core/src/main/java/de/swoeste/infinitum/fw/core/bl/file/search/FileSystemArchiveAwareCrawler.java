@@ -42,10 +42,12 @@ import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
  */
 public class FileSystemArchiveAwareCrawler extends FileSystemCrawler {
 
+    // TODO java doc
+
     private static final Logger LOG       = LoggerFactory.getLogger(FileSystemArchiveAwareCrawler.class);
 
     private static final byte[] ZIP       = { (byte) 0x50, (byte) 0x4B, (byte) 0x03, (byte) 0x04 };
-    private static final String READ_MODE = "r";                                                                                                                                                                                                                                                                                                                                                                                                                                                                         //$NON-NLS-1$
+    private static final String READ_MODE = "r";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  //$NON-NLS-1$
 
     /**
      * Constructor for a new FileSystemArchiveAwareCrawler.

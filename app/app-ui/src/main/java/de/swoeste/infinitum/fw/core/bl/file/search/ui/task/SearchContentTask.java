@@ -27,6 +27,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.swoeste.infinitum.fw.core.bl.file.search.FileContentSearch;
 import de.swoeste.infinitum.fw.core.bl.file.search.FileContentSearchConfiguration;
 import de.swoeste.infinitum.fw.core.bl.file.search.FileSystemSearch;
@@ -44,9 +47,16 @@ import javafx.scene.Node;
 import javafx.util.Pair;
 
 /**
+ * This task is used to perform a file and content search.
+ *
  * @author swoeste
  */
 public class SearchContentTask extends AbstractNodeDisablingTask<Void> {
+
+    private static final Logger                 LOG     = LoggerFactory.getLogger(SearchContentTask.class);
+
+    // TODO maybe we make this configurable in the future
+    public static final int                     THREADS = 8;
 
     private final ObservableList<UIFileContent> searchResults;
     private final String                        searchPath;
@@ -81,8 +91,7 @@ public class SearchContentTask extends AbstractNodeDisablingTask<Void> {
 
     private FileContentSearchConfiguration createFileContentSearchConfig(final Queue<Resource> filesToSearchIn) {
         final ResourceAnalyzer resourceAnalyzer = new ResourceContentAnalyzer(this.searchContentPattern);
-        // TODO threads = 8 - make me configurable
-        return new FileContentSearchConfiguration(filesToSearchIn, resourceAnalyzer, this.executor, 8);
+        return new FileContentSearchConfiguration(filesToSearchIn, resourceAnalyzer, this.executor, THREADS);
     }
 
     /** {@inheritDoc} */
@@ -106,30 +115,35 @@ public class SearchContentTask extends AbstractNodeDisablingTask<Void> {
 
         final Map<String, UIFileContent> resourceByPath = new HashMap<>();
         for (SearchResult resource : contentSearchResult) {
-            try {
-                final String filePathAsString = resource.getResource().getFilePathAsString();
+            final String filePathAsString = resource.getResource().getPathAsString();
 
-                UIFileContent content = resourceByPath.get(filePathAsString);
-                if (content == null) {
-                    content = new UIFileContent(filePathAsString, resource.getResource().getContentAsString(), new ArrayList<>());
-                    this.searchResults.add(content);
-                    resourceByPath.put(filePathAsString, content);
-                }
-
-                updateMessage("Status: Scanning file \"" + filePathAsString + "\"");
-                updateProgress(currWork, maxWork);
-                currWork++;
-
-                content.getResultPositions().add(new Pair<Long, Long>(resource.getStartIndex(), resource.getEndIndex()));
-            } catch (IOException ex) {
-                // TODO Auto-generated catch block
-                ex.printStackTrace();
+            UIFileContent uiElement = resourceByPath.get(filePathAsString);
+            if (uiElement == null) {
+                uiElement = new UIFileContent(filePathAsString);
+                loadContent(uiElement, resource);
+                this.searchResults.add(uiElement);
+                resourceByPath.put(filePathAsString, uiElement);
             }
+
+            updateMessage("Status: Scanning file \"" + filePathAsString + "\"");
+            updateProgress(currWork, maxWork);
+            currWork++;
+
+            uiElement.getResultPositions().add(new Pair<>(resource.getStartIndex(), resource.getEndIndex()));
         }
 
         updateMessage("Status: Complete!");
         updateProgress(currWork, maxWork);
         return null;
+    }
+
+    private void loadContent(final UIFileContent content, final SearchResult resource) {
+        try {
+            content.setFileContent(resource.getResource().getContentAsString());
+        } catch (IOException ex) {
+            content.setFileContent("### unable to read file content ###"); //$NON-NLS-1$
+            LOG.error("Unable to read content of {}", resource.getResource().getPathAsString(), ex); //$NON-NLS-1$
+        }
     }
 
 }

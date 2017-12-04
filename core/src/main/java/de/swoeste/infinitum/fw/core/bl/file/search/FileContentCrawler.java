@@ -32,6 +32,8 @@ import de.swoeste.infinitum.fw.core.bl.file.search.model.SearchResult;
  */
 public class FileContentCrawler implements Callable<List<SearchResult>> {
 
+    // TODO java doc
+
     private final Queue<Resource>  files;
     private final ResourceAnalyzer analyzer;
 
@@ -40,6 +42,7 @@ public class FileContentCrawler implements Callable<List<SearchResult>> {
      *
      * @param files
      * @param analyzer
+     *            a analyzer to scan the file content
      */
     public FileContentCrawler(final Queue<Resource> files, final ResourceAnalyzer analyzer) {
         this.files = files;

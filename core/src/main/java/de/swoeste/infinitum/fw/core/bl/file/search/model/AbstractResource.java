@@ -30,8 +30,11 @@ import org.apache.commons.lang3.StringUtils;
  */
 public abstract class AbstractResource implements Resource {
 
-    private static final String CR_LF = "\r\n"; //$NON-NLS-1$
-    private static final String LF    = "\n";       //$NON-NLS-1$
+    // TODO make me configurable
+    private static final String UTF_8 = "UTF-8"; //$NON-NLS-1$
+
+    private static final String CR_LF = "\r\n";        //$NON-NLS-1$
+    private static final String LF    = "\n";                              //$NON-NLS-1$
 
     private final Path          filePath;
     private final Charset       encoding;
@@ -40,20 +43,22 @@ public abstract class AbstractResource implements Resource {
      * Constructor for a new AbstractResource.
      *
      * @param filePath
+     *            the path of this resource
      */
     public AbstractResource(final Path filePath) {
         this.filePath = filePath;
-        this.encoding = Charset.forName("UTF-8"); //$NON-NLS-1$ // TODO make it
-                                                  // configurable
+        this.encoding = Charset.forName(UTF_8);
     }
 
     /** {@inheritDoc} */
     @Override
-    public String getFileName() {
+    public String getName() {
         return this.filePath.toFile().getName();
     }
 
     /**
+     * The path of this resource
+     *
      * @return the filePath
      */
     public Path getFilePath() {
@@ -62,11 +67,13 @@ public abstract class AbstractResource implements Resource {
 
     /** {@inheritDoc} */
     @Override
-    public String getFilePathAsString() {
+    public String getPathAsString() {
         return this.filePath.toString();
     }
 
     /**
+     * The encoding which should be used for reading this files content.
+     *
      * @return the encoding
      */
     public Charset getEncoding() {

@@ -39,12 +39,11 @@ public class ResourceContentAnalyzer implements ResourceAnalyzer {
      * Constructor for a new ResourceContentAnalyzer.
      *
      * @param search
+     *            a regular expression to search for in the content
      */
     public ResourceContentAnalyzer(final String search) {
         this.searchPattern = Pattern.compile(search);
     }
-
-    // TODO throw checked exception instead of IllegalStateEx...!
 
     /** {@inheritDoc} */
     @Override
@@ -65,6 +64,7 @@ public class ResourceContentAnalyzer implements ResourceAnalyzer {
 
             return result;
         } catch (final IOException ex) {
+            // TODO throw checked exception instead of IllegalStateEx...!
             final String message = MessageFormat.format("Unable to analyze: {0}", resource); //$NON-NLS-1$
             throw new IllegalStateException(message, ex);
         }

@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.swoeste.infinitum.fw.core.bl.file.search.FileSystemSearch;
 import de.swoeste.infinitum.fw.core.bl.file.search.FileSystemSearchConfiguration;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
@@ -33,9 +36,13 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 
 /**
+ * This task is used to perform a file search.
+ *
  * @author swoeste
  */
 public class SearchFileTask extends AbstractNodeDisablingTask<Void> {
+
+    private static final Logger              LOG = LoggerFactory.getLogger(SearchFileTask.class);
 
     private final ObservableList<UIFilePath> searchResults;
     private final String                     searchPath;
@@ -73,7 +80,7 @@ public class SearchFileTask extends AbstractNodeDisablingTask<Void> {
 
         final Queue<Resource> searchResult = search.getFiles();
 
-        int maxWork = searchResult.size() + 1;
+        final int maxWork = searchResult.size() + 1;
         updateMessage("Status: Preparing result(s) ...");
         updateProgress(0, maxWork);
 
@@ -81,7 +88,7 @@ public class SearchFileTask extends AbstractNodeDisablingTask<Void> {
         for (Resource resource : searchResult) {
             updateProgress(currWork, maxWork);
             currWork++;
-            this.searchResults.add(new UIFilePath(resource.getFilePathAsString()));
+            this.searchResults.add(new UIFilePath(resource.getPathAsString()));
         }
 
         updateMessage("Status: Complete!");

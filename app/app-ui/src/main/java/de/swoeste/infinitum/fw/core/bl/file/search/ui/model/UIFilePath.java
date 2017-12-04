@@ -21,6 +21,8 @@ package de.swoeste.infinitum.fw.core.bl.file.search.ui.model;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
+ * This class represents a file in the UI.
+ *
  * @author swoeste
  */
 public class UIFilePath {

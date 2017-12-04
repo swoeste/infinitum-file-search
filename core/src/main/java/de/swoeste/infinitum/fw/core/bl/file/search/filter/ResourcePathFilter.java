@@ -23,6 +23,8 @@ import java.util.regex.Pattern;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
 
 /**
+ * This filter is capable of filtering the path of a resource with a regular expression.
+ *
  * @author swoeste
  */
 public class ResourcePathFilter implements ResourceFilter {
@@ -32,16 +34,17 @@ public class ResourcePathFilter implements ResourceFilter {
     /**
      * Constructor for a new ResourceNameFilter.
      *
-     * @param path
+     * @param regEx
+     *            a regular expression to filter the path
      */
-    public ResourcePathFilter(final String path) {
-        this.pattern = Pattern.compile(path);
+    public ResourcePathFilter(final String regEx) {
+        this.pattern = Pattern.compile(regEx);
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean accept(final Resource resource) {
-        final String filePath = resource.getFilePathAsString();
+        final String filePath = resource.getPathAsString();
         return this.pattern.matcher(filePath).matches();
     }
 

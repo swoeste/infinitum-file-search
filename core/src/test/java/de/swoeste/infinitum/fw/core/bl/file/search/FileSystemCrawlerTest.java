@@ -82,7 +82,7 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
         final Queue<Resource> failedFiles = search.getFailedFiles();
 
         for (final Resource iFile : files) {
-            final String fileName = iFile.getFileName();
+            final String fileName = iFile.getName();
             Assert.assertTrue(fileName.startsWith("1"), "Expected resource to start with '1' but found " + fileName);
         }
 
@@ -103,7 +103,7 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
         final Queue<Resource> failedFiles = search.getFailedFiles();
 
         for (final Resource iFile : files) {
-            final String fileName = iFile.getFileName();
+            final String fileName = iFile.getName();
             Assert.assertTrue(fileName.startsWith("1"), "Expected resource to start with '1' but found " + fileName);
         }
 
@@ -124,7 +124,7 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
         final Queue<Resource> failedFiles = search.getFailedFiles();
 
         for (final Resource file : files) {
-            final String filePath = file.getFilePathAsString();
+            final String filePath = file.getPathAsString();
             final String expectedPath = File.separator + "root" + File.separator + "5";
             Assert.assertTrue(filePath.contains(expectedPath), "Expected resource to contain '" + expectedPath + "' but found " + filePath);
         }
@@ -146,7 +146,7 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
         final Queue<Resource> failedFiles = search.getFailedFiles();
 
         for (final Resource file : files) {
-            final String filePath = file.getFilePathAsString();
+            final String filePath = file.getPathAsString();
             final String expectedPath = File.separator + "root" + File.separator + "5";
             Assert.assertTrue(filePath.contains(expectedPath), "Expected resource to contain '" + expectedPath + "' but found " + filePath);
         }

@@ -30,6 +30,8 @@ import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
  */
 public class FileContentSearchConfiguration {
 
+    // TODO java doc
+
     private final Queue<Resource>  files;
     private final ResourceAnalyzer analyzer;
     private final Executor         executor;

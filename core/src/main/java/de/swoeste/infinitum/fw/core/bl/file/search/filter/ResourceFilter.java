@@ -25,11 +25,12 @@ import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
  */
 public interface ResourceFilter {
 
-    // TODO javadoc
-
     /**
+     * Evaluates the filter expression on the given resource.
+     *
      * @param resource
-     * @return
+     *            the resource the filter should be evaluated on
+     * @return true if the resource matches the filter, false if not
      */
     boolean accept(Resource resource);
 

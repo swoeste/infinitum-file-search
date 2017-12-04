@@ -25,12 +25,26 @@ import java.io.IOException;
  */
 public interface Resource {
 
-    // TODO JAVADOC
+    /**
+     * The name of the resource
+     *
+     * @return the name
+     */
+    String getName();
 
-    String getFileName();
+    /**
+     * The path of the resource (as string) including the name
+     *
+     * @return the path as string
+     */
+    String getPathAsString();
 
-    String getFilePathAsString();
-
+    /**
+     * The content of the resource (as string)
+     *
+     * @return the content as string
+     * @throws IOException
+     */
     String getContentAsString() throws IOException;
 
 }

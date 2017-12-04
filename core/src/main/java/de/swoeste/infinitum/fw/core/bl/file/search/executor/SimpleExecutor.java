@@ -25,10 +25,16 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author swoeste
  */
+// TODO naming
 public class SimpleExecutor implements Executor {
+
+    private static final Logger         LOG      = LoggerFactory.getLogger(SimpleExecutor.class);
 
     private static final SimpleExecutor INSTANCE = new SimpleExecutor();
 
@@ -51,18 +57,13 @@ public class SimpleExecutor implements Executor {
         return this.executorService.submit(runnable);
     }
 
+    @Override
     public void shutdown() throws InterruptedException {
-        // TODO check working behavior
         this.executorService.shutdown();
-        if (!this.executorService.awaitTermination(60, TimeUnit.SECONDS)) { // optional
-            // *
-            // Logger.log("Executor did not terminate in the specified time.");
-            // //optional *
-            final List<Runnable> droppedTasks = this.executorService.shutdownNow(); // optional
-            // **
-            // Logger.log("Executor was abruptly shut down. " +
-            // droppedTasks.size() + " tasks will not be executed."); //optional
-            // **
+        if (!this.executorService.awaitTermination(60, TimeUnit.SECONDS)) {
+            LOG.warn("Executor did not terminate in the specified time."); //$NON-NLS-1$
+            final List<Runnable> droppedTasks = this.executorService.shutdownNow();
+            LOG.warn("Executor was abruptly shut down. {} tasks will not be executed.", droppedTasks.size()); //$NON-NLS-1$
         }
     }
 

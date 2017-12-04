@@ -29,6 +29,8 @@ import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
  */
 public class FileSystemSearchConfiguration {
 
+    // TODO java doc
+
     private final Path                 path;
     private final List<ResourceFilter> filters;
     private final boolean              searchArchives;

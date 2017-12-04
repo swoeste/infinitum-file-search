@@ -18,6 +18,7 @@
  */
 package de.swoeste.infinitum.fw.core.bl.file.search.ui.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javafx.beans.property.SimpleObjectProperty;
@@ -25,6 +26,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.util.Pair;
 
 /**
+ * This class represents a file with its content in the UI.
+ *
  * @author swoeste
  */
 public class UIFileContent {
@@ -34,13 +37,17 @@ public class UIFileContent {
     private final SimpleObjectProperty<Collection<Pair<Long, Long>>> resultPositions;
 
     public UIFileContent() {
-        this(null, null, null);
+        this(null);
+    }
+
+    public UIFileContent(final String filePath) {
+        this(filePath, null, new ArrayList<>());
     }
 
     public UIFileContent(final String filePath, final String fileContent, final Collection<Pair<Long, Long>> resultPositions) {
         this.filePath = new SimpleStringProperty(filePath);
         this.fileContent = new SimpleStringProperty(fileContent);
-        this.resultPositions = new SimpleObjectProperty<Collection<Pair<Long, Long>>>(resultPositions);
+        this.resultPositions = new SimpleObjectProperty<>(resultPositions);
     }
 
     public String getFilePath() {
@@ -74,7 +81,6 @@ public class UIFileContent {
         } else {
             return 0;
         }
-
     }
 
 }

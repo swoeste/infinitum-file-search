@@ -26,11 +26,13 @@ import java.text.MessageFormat;
 import org.zeroturnaround.zip.ZipUtil;
 
 /**
+ * This represents a concrete file within an archive.
+ *
  * @author swoeste
  */
 public class ArchiveEntry extends AbstractResource {
 
-    private static final String DELIMITER = "!";    //$NON-NLS-1$
+    private static final String DELIMITER = "!";      //$NON-NLS-1$
 
     private final String        archiveEntryPath;
     private final String        archiveEntryName;
@@ -39,7 +41,9 @@ public class ArchiveEntry extends AbstractResource {
      * Constructor for a new ArchiveEntry.
      *
      * @param archivePath
+     *            the full qualified path of the archive
      * @param archiveEntryPath
+     *            the full qualified path of the file within the archive
      */
     public ArchiveEntry(final Path archivePath, final String archiveEntryPath) {
         super(archivePath);
@@ -49,20 +53,20 @@ public class ArchiveEntry extends AbstractResource {
 
     /** {@inheritDoc} */
     @Override
-    public String getFileName() {
+    public String getName() {
         return this.archiveEntryName;
     }
 
     /** {@inheritDoc} */
     @Override
     public Path getFilePath() {
-        return Paths.get(super.getFilePathAsString(), DELIMITER, this.archiveEntryPath);
+        return Paths.get(super.getPathAsString(), DELIMITER, this.archiveEntryPath);
     }
 
     /** {@inheritDoc} */
     @Override
-    public String getFilePathAsString() {
-        return super.getFilePathAsString() + DELIMITER + this.archiveEntryPath;
+    public String getPathAsString() {
+        return super.getPathAsString() + DELIMITER + this.archiveEntryPath;
     }
 
     private final String extractName(final String path) {

@@ -24,6 +24,8 @@ import java.util.regex.Pattern;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
 
 /**
+ * This filter is capable of filtering the name of a resource with a regular expression.
+ *
  * @author swoeste
  */
 public class ResourceNameFilter implements ResourceFilter {
@@ -33,17 +35,18 @@ public class ResourceNameFilter implements ResourceFilter {
     /**
      * Constructor for a new ResourceNameFilter.
      *
-     * @param name
+     * @param regEx
+     *            a regular expression to filter the name
      */
-    public ResourceNameFilter(final String name) {
-        this.pattern = Pattern.compile(name);
+    public ResourceNameFilter(final String regEx) {
+        this.pattern = Pattern.compile(regEx);
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean accept(final Resource resource) {
-        final String fileName = resource.getFileName(); // does not work with
-                                                        // archive
+        // TODO does not work with archives (?)
+        final String fileName = resource.getName();
         return this.pattern.matcher(fileName).matches();
     }
 

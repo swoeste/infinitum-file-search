@@ -29,8 +29,11 @@ import de.swoeste.infinitum.fw.core.bl.file.search.model.SearchResult;
 public interface ResourceAnalyzer {
 
     /**
+     * Analyzes the content of the given resource and returns a list with matches within the content of that resource.
+     *
      * @param resource
-     * @return
+     *            the resource to analyze
+     * @return a list of matches within the content
      */
     List<SearchResult> analyze(Resource resource);
 

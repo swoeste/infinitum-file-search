@@ -27,15 +27,29 @@ import java.util.concurrent.Future;
 public interface Executor {
 
     /**
+     * Submits a value-returning task for execution and returns a Future representing the pending results of the task.
+     * The Future's {@code get} method will return the task's result upon successful completion.
+     *
      * @param callable
-     * @return
+     *            the task to execute
+     * @return the future object to access the task result
      */
     <T> Future<T> submit(final Callable<T> callable);
 
     /**
+     * Submits a value-returning task for execution and returns a Future representing the pending results of the task.
+     * The Future's {@code get} method will return the task's result upon successful completion.
+     *
      * @param runnable
-     * @return
+     *            the task to execute
+     * @return the future object to access the task result
      */
     Future<?> submit(final Runnable runnable);
 
+    /**
+     * Shutdown this executer gracefully.
+     *
+     * @throws InterruptedException
+     */
+    void shutdown() throws InterruptedException;
 }

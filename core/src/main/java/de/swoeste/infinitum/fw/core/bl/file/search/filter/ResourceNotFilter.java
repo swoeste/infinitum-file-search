@@ -21,12 +21,20 @@ package de.swoeste.infinitum.fw.core.bl.file.search.filter;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
 
 /**
+ * This filter is capable of negating any other filter.
+ *
  * @author swoeste
  */
 public class ResourceNotFilter implements ResourceFilter {
 
     final ResourceFilter resourceFilter;
 
+    /**
+     * Constructor for a new ResourceNotFilter.
+     *
+     * @param resourceFilter
+     *            a filter to negate
+     */
     public ResourceNotFilter(final ResourceFilter resourceFilter) {
         this.resourceFilter = resourceFilter;
     }

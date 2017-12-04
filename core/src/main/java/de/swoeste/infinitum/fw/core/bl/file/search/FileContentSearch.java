@@ -25,6 +25,9 @@ import java.util.Queue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.swoeste.infinitum.fw.core.bl.file.search.analyzer.ResourceAnalyzer;
 import de.swoeste.infinitum.fw.core.bl.file.search.executor.Executor;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
@@ -35,6 +38,8 @@ import de.swoeste.infinitum.fw.core.bl.file.search.model.SearchResult;
  */
 public class FileContentSearch {
 
+    private static final Logger                    LOG = LoggerFactory.getLogger(FileContentSearch.class);
+
     private final FileContentSearchConfiguration   configuration;
     private final List<FileContentCrawler>         crawlers;
     private final List<Future<List<SearchResult>>> futures;
@@ -43,7 +48,7 @@ public class FileContentSearch {
      * Constructor for a new FileContentSearch.
      *
      * @param configuration
-     * @param crawler
+     *            the configuration for this search
      */
     public FileContentSearch(final FileContentSearchConfiguration configuration) {
         this.configuration = configuration;
@@ -67,13 +72,15 @@ public class FileContentSearch {
             try {
                 final List<SearchResult> futureResult = future.get();
                 result.addAll(futureResult);
-            } catch (final InterruptedException e) {
+            } catch (final InterruptedException ex) {
                 Thread.currentThread().interrupt();
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (final ExecutionException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                final String msg = "Thread was interrupted while fetching results"; //$NON-NLS-1$
+                LOG.error(msg, ex);
+                throw new IllegalStateException(msg, ex);
+            } catch (final ExecutionException ex) {
+                final String msg = "An exception occured while trying to fetch results"; //$NON-NLS-1$
+                LOG.error(msg, ex);
+                throw new IllegalStateException(msg, ex);
             }
         }
         return Collections.unmodifiableList(result);

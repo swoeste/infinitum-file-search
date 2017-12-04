@@ -20,20 +20,29 @@ package de.swoeste.infinitum.fw.core.bl.file.search.ui.task;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javafx.concurrent.Task;
 import javafx.scene.Node;
 
 /**
+ * This abstract task disables all provided nodes on task start an re-enables them as soon as the task has finished (or
+ * an error occurred).
+ *
  * @author swoeste
  */
 public abstract class AbstractNodeDisablingTask<V> extends Task<V> {
 
-    private final List<Node> nodes;
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractNodeDisablingTask.class);
+
+    private final List<Node>    nodes;
 
     /**
      * Constructor for a new AbstractNodeDisablingTask.
      *
      * @param nodes
+     *            the nodes to disable during task execution
      */
     public AbstractNodeDisablingTask(final List<Node> nodes) {
         this.nodes = nodes;
@@ -56,6 +65,6 @@ public abstract class AbstractNodeDisablingTask<V> extends Task<V> {
         }
     }
 
-    protected abstract V callInternal() throws Exception;
+    protected abstract V callInternal() throws Exception; // NOSONAR this is by API design of Task
 
 }

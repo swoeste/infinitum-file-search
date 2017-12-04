@@ -34,9 +34,13 @@ public class SearchResult {
      * Constructor for a new SearchResult.
      *
      * @param resource
+     *            the resource this result belongs to
      * @param content
+     *            the content of the resource this result belongs to
      * @param startIndex
+     *            the start position within the content where the search found a match
      * @param endIndex
+     *            the end position within the content where the search found a match
      */
     public SearchResult(final Resource resource, final String content, final long startIndex, final long endIndex) {
         this.resource = resource;
@@ -46,6 +50,8 @@ public class SearchResult {
     }
 
     /**
+     * The resource this result belongs to.
+     *
      * @return the resource
      */
     public Resource getResource() {
@@ -53,6 +59,8 @@ public class SearchResult {
     }
 
     /**
+     * The content of the resource this result belongs to.
+     *
      * @return the content
      */
     public String getContent() {
@@ -60,6 +68,8 @@ public class SearchResult {
     }
 
     /**
+     * The start position within the content where the search found a match.
+     *
      * @return the startIndex
      */
     public long getStartIndex() {
@@ -67,6 +77,8 @@ public class SearchResult {
     }
 
     /**
+     * The end position within the content where the search found a match.
+     *
      * @return the endIndex
      */
     public long getEndIndex() {

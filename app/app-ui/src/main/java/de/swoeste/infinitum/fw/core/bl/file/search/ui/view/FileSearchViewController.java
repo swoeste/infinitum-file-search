@@ -25,6 +25,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.NavigationActions.SelectionPolicy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.swoeste.infinitum.fw.core.bl.file.search.executor.Executor;
 import de.swoeste.infinitum.fw.core.bl.file.search.ui.model.UIFileContent;
@@ -49,7 +51,14 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+/**
+ * This class controlls the behaviour of all nodes/elements in the UI.
+ *
+ * @author swoeste
+ */
 public class FileSearchViewController {
+
+    private static final Logger      LOG = LoggerFactory.getLogger(FileSearchViewController.class);
 
     private Stage                    primaryStage;
     private Executor                 executor;
@@ -97,7 +106,7 @@ public class FileSearchViewController {
 
     @FXML
     void initialize() {
-        // add line numbers
+        // display line numbers in code area
         this.searchContentSelectedFilePathContent.setParagraphGraphicFactory(LineNumberFactory.get(this.searchContentSelectedFilePathContent));
     }
 
@@ -163,14 +172,22 @@ public class FileSearchViewController {
         final UIFileContent selectedItem = this.searchContentTable.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
             // set content
-            final String fileContent = selectedItem.getFileContent();
+            final String fileContent = StringUtils.defaultString(selectedItem.getFileContent(), "");
+            final int minStart = 0;
+            final int maxEnd = fileContent.length() - 1;
+
             this.searchContentSelectedFilePathContent.replaceText(fileContent);
 
             // set style
             for (Pair<Long, Long> pair : selectedItem.getResultPositions()) {
                 final int currStart = pair.getKey().intValue();
                 final int currEnd = pair.getValue().intValue();
-                this.searchContentSelectedFilePathContent.setStyleClass(currStart, currEnd, "highlight"); //$NON-NLS-1$
+
+                if ((currStart >= minStart) && (currStart <= currEnd) && (currEnd <= maxEnd)) {
+                    this.searchContentSelectedFilePathContent.setStyleClass(currStart, currEnd, "highlight"); //$NON-NLS-1$
+                } else {
+                    LOG.warn("Unable to mark start {} and end {} in a string of length {}", currStart, currEnd, maxEnd);
+                }
             }
 
             this.searchContentSelectedFilePathContent.start(SelectionPolicy.CLEAR);

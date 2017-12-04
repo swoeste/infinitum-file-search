@@ -20,6 +20,9 @@ package de.swoeste.infinitum.fw.core.bl.file.search.ui;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.swoeste.infinitum.fw.core.bl.file.search.executor.SimpleExecutor;
 import de.swoeste.infinitum.fw.core.bl.file.search.ui.view.FileSearchViewController;
 import javafx.application.Application;
@@ -30,15 +33,16 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
- * @author swoeste http://code.makery.ch/library/javafx-8-tutorial/part3/
+ * @author swoeste
  */
 public class FileSearchApplication extends Application {
 
-    // General TODO List
-    // - add section to display failed files
-    // - check for general exception handling
-    // - clean up fxml file, remove everything what is not required
-    // - code review, clean up, java doc and sonar
+    // TODO java doc
+    // TODO general exception handling
+    // TODO code review, code clean up, java doc and sonar
+    // TODO the shutdown() on executor only interrupts all threads, so we need to check for "Thread.interupted"
+
+    private static final Logger         LOG      = LoggerFactory.getLogger(FileSearchApplication.class);
 
     private static final SimpleExecutor EXECUTOR = SimpleExecutor.getInstance();
 
@@ -74,9 +78,10 @@ public class FileSearchApplication extends Application {
             // Show the scene containing the root layout.
             this.primaryStage.setScene(scene);
             this.primaryStage.show();
-        } catch (final IOException e) {
-            // TODO
-            e.printStackTrace();
+        } catch (final IOException ex) {
+            final String msg = "Unable to initialize user interface"; //$NON-NLS-1$
+            LOG.error(msg, ex);
+            throw new IllegalStateException(msg, ex);
         }
     }
 
