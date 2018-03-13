@@ -30,8 +30,8 @@ import de.swoeste.infinitum.fw.core.bl.file.search.analyzer.ResourceContentAnaly
 import de.swoeste.infinitum.fw.core.bl.file.search.executor.SimpleExecutor;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceNameFilter;
-import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.SearchResult;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
 
 /**
  * @author swoeste

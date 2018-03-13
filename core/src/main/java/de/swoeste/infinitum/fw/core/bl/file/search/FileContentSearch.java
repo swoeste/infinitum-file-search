@@ -30,8 +30,8 @@ import org.slf4j.LoggerFactory;
 
 import de.swoeste.infinitum.fw.core.bl.file.search.analyzer.ResourceAnalyzer;
 import de.swoeste.infinitum.fw.core.bl.file.search.executor.Executor;
-import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.SearchResult;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
 
 /**
  * @author swoeste

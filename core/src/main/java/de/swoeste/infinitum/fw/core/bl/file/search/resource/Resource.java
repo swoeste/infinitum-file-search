@@ -16,9 +16,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.swoeste.infinitum.fw.core.bl.file.search.model;
+package de.swoeste.infinitum.fw.core.bl.file.search.resource;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 
 /**
  * @author swoeste
@@ -37,7 +39,7 @@ public interface Resource {
      *
      * @return the path as string
      */
-    String getPathAsString();
+    String getPath();
 
     /**
      * The content of the resource (as string)
@@ -46,5 +48,17 @@ public interface Resource {
      * @throws IOException
      */
     String getContentAsString() throws IOException;
+
+    /**
+     * The encoding which should be used for reading this files content.
+     *
+     * @return the encoding
+     */
+    Charset getEncoding();
+
+    /**
+     * @return
+     */
+    InputStream getInputStream() throws IOException;
 
 }

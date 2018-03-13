@@ -16,36 +16,37 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.swoeste.infinitum.fw.core.bl.file.search.filter;
+package de.swoeste.infinitum.fw.core.bl.file.search.resource.archive;
 
-import java.util.regex.Pattern;
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.zeroturnaround.zip.ZipUtil;
 
 import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
 
 /**
- * This filter is capable of filtering the path of a resource with a regular expression.
- *
  * @author swoeste
  */
-public class ResourcePathFilter implements ResourceFilter {
-
-    private final Pattern pattern;
+public class ZIPArchiveFile extends AbstractArchiveFile {
 
     /**
-     * Constructor for a new ResourceNameFilter.
+     * Constructor for a new ZIPArchiveFile.
      *
-     * @param regEx
-     *            a regular expression to filter the path
+     * @param parent
+     * @param archiveEntryType
+     * @param archiveEntryPath
+     * @param archiveEntryName
      */
-    public ResourcePathFilter(final String regEx) {
-        this.pattern = Pattern.compile(regEx);
+    public ZIPArchiveFile(final Resource parent, final String archiveEntryPath, final String archiveEntryName) {
+        super(parent, ArchiveFileType.ZIP, archiveEntryPath, archiveEntryName);
     }
 
-    /** {@inheritDoc} */
     @Override
-    public boolean accept(final Resource resource) {
-        final String filePath = resource.getPath();
-        return this.pattern.matcher(filePath).matches();
+    protected byte[] getContentAsByteArray() throws IOException {
+        final InputStream inputStream = this.getParent().getInputStream();
+        // Das hier darf nicht automatisch ein ZIP sein!
+        return ZipUtil.unpackEntry(inputStream, getPath());
     }
 
 }

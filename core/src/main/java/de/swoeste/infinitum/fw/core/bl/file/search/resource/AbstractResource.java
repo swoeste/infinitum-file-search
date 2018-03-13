@@ -16,11 +16,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.swoeste.infinitum.fw.core.bl.file.search.model;
+package de.swoeste.infinitum.fw.core.bl.file.search.resource;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.Path;
 import java.text.MessageFormat;
 
 import org.apache.commons.lang3.StringUtils;
@@ -30,52 +29,60 @@ import org.apache.commons.lang3.StringUtils;
  */
 public abstract class AbstractResource implements Resource {
 
-    // TODO make me configurable
     private static final String UTF_8 = "UTF-8"; //$NON-NLS-1$
 
-    private static final String CR_LF = "\r\n";        //$NON-NLS-1$
-    private static final String LF    = "\n";                              //$NON-NLS-1$
+    private static final String CR_LF = "\r\n";                        //$NON-NLS-1$
+    private static final String LF    = "\n";                                                                      //$NON-NLS-1$
 
-    private final Path          filePath;
+    private final Resource      parent;
+
+    // RENAME TO RESOURCE*
+    private final String        resourcePath;
+    private final String        resourceName;
+
     private final Charset       encoding;
 
     /**
      * Constructor for a new AbstractResource.
      *
-     * @param filePath
+     * @param resourcePath
      *            the path of this resource
      */
-    public AbstractResource(final Path filePath) {
-        this.filePath = filePath;
+    public AbstractResource(final Resource parent, final String resourcePath, final String resourceName) {
+        this.parent = parent;
+        this.resourcePath = resourcePath;
+        this.resourceName = resourceName;
         this.encoding = Charset.forName(UTF_8);
+    }
+
+    public AbstractResource(final Resource parent, final String resourcePath, final String resourceName, final Charset encoding) {
+        this.parent = parent;
+        this.resourcePath = resourcePath;
+        this.resourceName = resourceName;
+        this.encoding = encoding;
+    }
+
+    /**
+     * @return the parent
+     */
+    public Resource getParent() {
+        return this.parent;
     }
 
     /** {@inheritDoc} */
     @Override
     public String getName() {
-        return this.filePath.toFile().getName();
-    }
-
-    /**
-     * The path of this resource
-     *
-     * @return the filePath
-     */
-    public Path getFilePath() {
-        return this.filePath;
+        return this.resourceName;
     }
 
     /** {@inheritDoc} */
     @Override
-    public String getPathAsString() {
-        return this.filePath.toString();
+    public String getPath() {
+        return this.resourcePath;
     }
 
-    /**
-     * The encoding which should be used for reading this files content.
-     *
-     * @return the encoding
-     */
+    /** {@inheritDoc} */
+    @Override
     public Charset getEncoding() {
         return this.encoding;
     }
@@ -92,7 +99,7 @@ public abstract class AbstractResource implements Resource {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return MessageFormat.format("{0} [filePath={1}]", this.getClass().getSimpleName(), this.filePath); //$NON-NLS-1$
+        return MessageFormat.format("{0} [filePath={1}]", this.getClass().getSimpleName(), this.resourcePath); //$NON-NLS-1$
     }
 
 }

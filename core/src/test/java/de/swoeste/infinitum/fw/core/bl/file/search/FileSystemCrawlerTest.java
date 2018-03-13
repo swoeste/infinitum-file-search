@@ -31,7 +31,7 @@ import org.testng.annotations.Test;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceNameFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourcePathFilter;
-import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
 
 /**
  * @author swoeste
@@ -124,7 +124,7 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
         final Queue<Resource> failedFiles = search.getFailedFiles();
 
         for (final Resource file : files) {
-            final String filePath = file.getPathAsString();
+            final String filePath = file.getPath();
             final String expectedPath = File.separator + "root" + File.separator + "5";
             Assert.assertTrue(filePath.contains(expectedPath), "Expected resource to contain '" + expectedPath + "' but found " + filePath);
         }
@@ -146,7 +146,7 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
         final Queue<Resource> failedFiles = search.getFailedFiles();
 
         for (final Resource file : files) {
-            final String filePath = file.getPathAsString();
+            final String filePath = file.getPath();
             final String expectedPath = File.separator + "root" + File.separator + "5";
             Assert.assertTrue(filePath.contains(expectedPath), "Expected resource to contain '" + expectedPath + "' but found " + filePath);
         }

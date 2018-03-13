@@ -16,11 +16,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.swoeste.infinitum.fw.core.bl.file.search.model;
+package de.swoeste.infinitum.fw.core.bl.file.search.resource.file;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.AbstractResource;
 
 /**
  * This represents a concrete file from a file storage.
@@ -36,14 +41,23 @@ public class SimpleFile extends AbstractResource {
      *            the full qualified path representing this file (including the file name)
      */
     public SimpleFile(final Path filePath) {
-        super(filePath);
+        // TODO improve me
+        super(null, filePath.toAbsolutePath().toString(), filePath.toAbsolutePath().getFileName().toString());
     }
 
     /** {@inheritDoc} */
     @Override
     public String getContentAsStringInternal() throws IOException {
-        final byte[] bytes = Files.readAllBytes(getFilePath());
+        final Path path = Paths.get(getPath());
+        final byte[] bytes = Files.readAllBytes(path);
         return new String(bytes, getEncoding());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public InputStream getInputStream() throws IOException {
+        final Path path = Paths.get(getPath());
+        return new FileInputStream(path.toFile());
     }
 
 }

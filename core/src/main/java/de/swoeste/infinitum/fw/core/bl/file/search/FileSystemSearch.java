@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Queue;
 
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
-import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
 
 /**
  * @author swoeste

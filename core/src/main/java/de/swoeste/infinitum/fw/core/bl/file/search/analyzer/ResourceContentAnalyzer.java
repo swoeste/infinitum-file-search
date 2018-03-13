@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.SearchResult;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
 
 /**
  * @author swoeste

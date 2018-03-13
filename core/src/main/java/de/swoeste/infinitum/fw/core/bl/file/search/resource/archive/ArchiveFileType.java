@@ -16,36 +16,27 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.swoeste.infinitum.fw.core.bl.file.search.filter;
-
-import java.util.regex.Pattern;
-
-import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
+package de.swoeste.infinitum.fw.core.bl.file.search.resource.archive;
 
 /**
- * This filter is capable of filtering the path of a resource with a regular expression.
- *
  * @author swoeste
  */
-public class ResourcePathFilter implements ResourceFilter {
+public enum ArchiveFileType {
 
-    private final Pattern pattern;
+    ZIP(new byte[] { (byte) 0x50, (byte) 0x4B, (byte) 0x03, (byte) 0x04 });
 
-    /**
-     * Constructor for a new ResourceNameFilter.
-     *
-     * @param regEx
-     *            a regular expression to filter the path
-     */
-    public ResourcePathFilter(final String regEx) {
-        this.pattern = Pattern.compile(regEx);
+    final byte[] prefix;
+
+    private ArchiveFileType(final byte[] prefix) {
+        this.prefix = prefix;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean accept(final Resource resource) {
-        final String filePath = resource.getPath();
-        return this.pattern.matcher(filePath).matches();
+    public byte[] getPrefix() {
+        return this.prefix;
+    }
+
+    public int getPrefixLength() {
+        return this.prefix.length;
     }
 
 }

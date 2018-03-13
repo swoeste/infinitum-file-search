@@ -20,6 +20,8 @@ package de.swoeste.infinitum.fw.core.bl.file.search.model;
 
 import java.text.MessageFormat;
 
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
+
 /**
  * @author swoeste
  */

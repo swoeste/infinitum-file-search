@@ -18,7 +18,7 @@
  */
 package de.swoeste.infinitum.fw.core.bl.file.search.filter;
 
-import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
 
 /**
  * This filter is capable of negating any other filter.

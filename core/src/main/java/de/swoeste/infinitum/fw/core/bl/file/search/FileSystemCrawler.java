@@ -29,8 +29,8 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
-import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
-import de.swoeste.infinitum.fw.core.bl.file.search.model.SimpleFile;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.file.SimpleFile;
 
 /**
  * @author swoeste
@@ -38,7 +38,6 @@ import de.swoeste.infinitum.fw.core.bl.file.search.model.SimpleFile;
 public class FileSystemCrawler extends SimpleFileVisitor<Path> {
 
     // TODO java doc
-
     // FIXME logging!
 
     private final List<ResourceFilter> filters;
@@ -61,9 +60,7 @@ public class FileSystemCrawler extends SimpleFileVisitor<Path> {
     public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs) throws IOException {
         if (file.toFile().isFile()) {
             final Resource currentFile = new SimpleFile(file);
-            if (accept(currentFile)) {
-                this.files.add(currentFile);
-            }
+            addResource(currentFile);
         }
         return FileVisitResult.CONTINUE;
     }
@@ -96,6 +93,13 @@ public class FileSystemCrawler extends SimpleFileVisitor<Path> {
         return this.failedFiles;
     }
 
+    protected final void addResource(final Resource archiveFile) {
+        if (accept(archiveFile)) {
+            this.files.add(archiveFile);
+        }
+    }
+
+    // TODO private non-final?
     protected final boolean accept(final Resource resource) {
         for (final ResourceFilter filter : this.filters) {
             if (!filter.accept(resource)) {
