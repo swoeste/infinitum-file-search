@@ -30,7 +30,7 @@ import de.swoeste.infinitum.fw.core.bl.file.search.FileSystemSearch;
 import de.swoeste.infinitum.fw.core.bl.file.search.FileSystemSearchConfiguration;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourcePathFilter;
-import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
 import de.swoeste.infinitum.fw.core.bl.file.search.ui.model.UIFilePath;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -88,7 +88,7 @@ public class SearchFileTask extends AbstractNodeDisablingTask<Void> {
         for (Resource resource : searchResult) {
             updateProgress(currWork, maxWork);
             currWork++;
-            this.searchResults.add(new UIFilePath(resource.getPathAsString()));
+            this.searchResults.add(new UIFilePath(resource.getPath()));
         }
 
         updateMessage("Status: Complete!");

@@ -44,8 +44,8 @@ import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceNameFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceNotFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourcePathFilter;
-import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.SearchResult;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
 
 /**
  * @author swoeste
@@ -106,14 +106,14 @@ public class FileSearchApplication {
         System.out.println("Result:");
         final Queue<Resource> files = fsSearch.getFiles();
         for (final Resource resource : files) {
-            System.out.println(resource.getPathAsString());
+            System.out.println(resource.getPath());
         }
 
         final Queue<Resource> failedFiles = fsSearch.getFailedFiles();
         if (!failedFiles.isEmpty()) {
             System.out.println("Failed:");
             for (final Resource resource : failedFiles) {
-                System.out.println(resource.getPathAsString());
+                System.out.println(resource.getPath());
             }
         }
     }
