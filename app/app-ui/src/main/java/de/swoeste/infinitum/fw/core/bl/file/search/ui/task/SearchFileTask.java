@@ -94,7 +94,7 @@ public class SearchFileTask extends AbstractNodeDisablingTask<Void> {
         for (Resource resource : searchResult) {
             updateProgress(currWork, maxWork);
             currWork++;
-            this.searchResults.add(new UIFilePath(resource.getFullQualifiedPath()));
+            this.searchResults.add(new UIFilePath(resource.getPath()));
         }
 
         updateMessage("Status: Complete!");

@@ -67,7 +67,26 @@
                 <type>jar</type>
             </dependency>
 
-            <!-- JavaFX Custom Controls -->
+        <!-- JavaFX -->
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-controls</artifactId>
+                <version>11.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-fxml</artifactId>
+                <version>11.0.1</version>
+            </dependency>
+
+			<!-- JavaFX Custom Controls -->
+            <dependency>
+                <groupId>org.fxmisc.richtext</groupId>
+                <artifactId>richtextfx</artifactId>
+                <version>0.8.0</version>
+            </dependency>			
+			
+			<!-- Test -->
             <dependency>
                 <groupId>org.fxmisc.richtext</groupId>
                 <artifactId>richtextfx</artifactId>
@@ -78,7 +97,7 @@
             <dependency>
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>
-                <version>6.11</version>
+                <version>6.14.3</version>
                 <scope>test</scope>
             </dependency>
 
@@ -130,28 +149,26 @@
 
         <!-- Plugin Configuration -->
         <pluginManagement>
-
             <plugins>
-                <!-- Use Java 8 -->
+                <!-- Use Java 11 -->
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.7.0</version>
+                    <version>3.8.0</version>
                     <configuration>
                         <showDeprecation>true</showDeprecation>
                         <showWarnings>true</showWarnings>
-                        <source>1.8</source>
-                        <target>1.8</target>
+                        <source>11</source>
+                        <target>11</target>
                         <encoding>UTF-8</encoding>
                         <optimize>true</optimize>
                         <skip>false</skip>
                         <debug>true</debug>
                     </configuration>
                 </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.0.2</version>
+                    <version>3.1.1</version>
                     <configuration>
                         <archive>
                             <addMavenDescriptor>true</addMavenDescriptor>
@@ -165,7 +182,6 @@
                         </archive>
                     </configuration>
                 </plugin>
-
             </plugins>
         </pluginManagement>
 

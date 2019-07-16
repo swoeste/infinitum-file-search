@@ -39,12 +39,22 @@
             <artifactId>logback-classic</artifactId>
         </dependency>
 
+        <!-- JavaFX -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+        </dependency>
+
         <!-- JavaFX Custom Controls -->
         <dependency>
             <groupId>org.fxmisc.richtext</groupId>
             <artifactId>richtextfx</artifactId>
         </dependency>
-
+        
     </dependencies>
 
     <!-- Build -->
@@ -73,7 +83,7 @@
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
-                                        <Main-Class>de.swoeste.infinitum.fw.core.bl.file.search.ui.FileSearchApplication</Main-Class>
+                                        <Main-Class>de.swoeste.infinitum.fw.core.bl.file.search.ui.Main</Main-Class>
                                     </manifestEntries>
                                 </transformer>
                             </transformers>

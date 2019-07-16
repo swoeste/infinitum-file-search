@@ -106,16 +106,14 @@ public class FileSearchApplication {
         System.out.println("Result:");
         final Queue<Resource> files = fsSearch.getFiles();
         for (final Resource resource : files) {
-            // TODO
-            // System.out.println(resource.getPathAsString());
+            System.out.println(resource.getPath());
         }
 
         final Queue<Resource> failedFiles = fsSearch.getFailedFiles();
         if (!failedFiles.isEmpty()) {
             System.out.println("Failed:");
             for (final Resource resource : failedFiles) {
-                // TODO
-                // System.out.println(resource.getPathAsString());
+                System.out.println(resource.getPath());
             }
         }
     }
