@@ -39,8 +39,8 @@ import de.swoeste.infinitum.fw.core.bl.file.search.analyzer.ResourceContentAnaly
 import de.swoeste.infinitum.fw.core.bl.file.search.executor.Executor;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourcePathFilter;
-import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.SearchResult;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
 import de.swoeste.infinitum.fw.core.bl.file.search.ui.model.UIFileContent;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -80,7 +80,7 @@ public class SearchContentTask extends AbstractNodeDisablingTask<Void> {
 
     private FileSystemSearchConfiguration createFileSearchConfig() {
         final Path path = Paths.get(this.searchPath);
-        return new FileSystemSearchConfiguration(path, getSearchFilter(), this.includeArchives, this.includeSubDirectories);
+        return new FileSystemSearchConfiguration(path, getSearchFilter(), this.includeArchives, this.includeSubDirectories, this.executor, THREADS);
     }
 
     private List<ResourceFilter> getSearchFilter() {
@@ -115,7 +115,7 @@ public class SearchContentTask extends AbstractNodeDisablingTask<Void> {
 
         final Map<String, UIFileContent> resourceByPath = new HashMap<>();
         for (SearchResult resource : contentSearchResult) {
-            final String filePathAsString = resource.getResource().getPathAsString();
+            final String filePathAsString = resource.getResource().getPath();
 
             UIFileContent uiElement = resourceByPath.get(filePathAsString);
             if (uiElement == null) {
@@ -142,7 +142,7 @@ public class SearchContentTask extends AbstractNodeDisablingTask<Void> {
             content.setFileContent(resource.getResource().getContentAsString());
         } catch (IOException ex) {
             content.setFileContent("### unable to read file content ###"); //$NON-NLS-1$
-            LOG.error("Unable to read content of {}", resource.getResource().getPathAsString(), ex); //$NON-NLS-1$
+            LOG.error("Unable to read content of {}", resource.getResource().getPath(), ex); //$NON-NLS-1$
         }
     }
 

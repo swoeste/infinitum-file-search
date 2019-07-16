@@ -27,6 +27,9 @@ import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
  */
 public class SearchResult {
 
+    // TODO java doc
+    // FIXME logging!
+
     private final Resource resource;
     private final String   content;
     private final long     startIndex;

@@ -22,6 +22,7 @@ import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.List;
 
+import de.swoeste.infinitum.fw.core.bl.file.search.executor.Executor;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 
 /**
@@ -29,12 +30,19 @@ import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
  */
 public class FileSystemSearchConfiguration {
 
+    // TODO shared base class with filecontentsearchconfiguration ?
+
     // TODO java doc
+    // FIXME logging!
 
     private final Path                 path;
     private final List<ResourceFilter> filters;
     private final boolean              searchArchives;
     private final int                  depth;
+    private final Executor             executor;
+    private final int                  instances;
+
+    // TODO reduce constructors?
 
     /**
      * Constructor for a new FileSystemSearchConfiguration.
@@ -43,8 +51,8 @@ public class FileSystemSearchConfiguration {
      * @param filters
      * @param searchArchives
      */
-    public FileSystemSearchConfiguration(final Path path, final List<ResourceFilter> filters, final boolean searchArchives) {
-        this(path, filters, searchArchives, Integer.MAX_VALUE);
+    public FileSystemSearchConfiguration(final Path path, final List<ResourceFilter> filters, final boolean searchArchives, final Executor executor, final int instances) {
+        this(path, filters, searchArchives, Integer.MAX_VALUE, executor, instances);
     }
 
     /**
@@ -55,11 +63,14 @@ public class FileSystemSearchConfiguration {
      * @param searchArchives
      * @param depth
      */
-    public FileSystemSearchConfiguration(final Path path, final List<ResourceFilter> filters, final boolean searchArchives, final int depth) {
+    public FileSystemSearchConfiguration(final Path path, final List<ResourceFilter> filters, final boolean searchArchives, final int depth, final Executor executor,
+            final int instances) {
         this.path = path;
         this.filters = filters;
         this.searchArchives = searchArchives;
         this.depth = depth;
+        this.executor = executor;
+        this.instances = instances;
     }
 
     /**
@@ -70,11 +81,14 @@ public class FileSystemSearchConfiguration {
      * @param searchArchives
      * @param includeSubDirectories
      */
-    public FileSystemSearchConfiguration(final Path path, final List<ResourceFilter> filters, final boolean searchArchives, final boolean includeSubDirectories) {
+    public FileSystemSearchConfiguration(final Path path, final List<ResourceFilter> filters, final boolean searchArchives, final boolean includeSubDirectories,
+            final Executor executor, final int instances) {
         this.path = path;
         this.filters = filters;
         this.searchArchives = searchArchives;
         this.depth = includeSubDirectories ? Integer.MAX_VALUE : 1;
+        this.executor = executor;
+        this.instances = instances;
     }
 
     /**
@@ -104,6 +118,22 @@ public class FileSystemSearchConfiguration {
     public int getDepth() {
         return this.depth;
     }
+
+    /**
+     * @return the executor
+     */
+    public Executor getExecutor() {
+        return this.executor;
+    }
+
+    /**
+     * @return the instances
+     */
+    public int getInstances() {
+        return this.instances;
+    }
+
+    // TODO recreate
 
     /** {@inheritDoc} */
     @Override

@@ -24,10 +24,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import de.swoeste.infinitum.fw.core.bl.file.search.executor.SimpleExecutor;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceNameFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourcePathFilter;
@@ -38,26 +40,33 @@ import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
  */
 @Test
 @SuppressWarnings("nls")
-public class FileSystemCrawlerTest extends AbstractCrawlerTest {
+public class TestFileSystemCrawler {
+
+    // TODO REWORK THIS TEST!
 
     public void testFileSystemCrawler() {
-        final Path directory = getTestFolder();
+        final Path directory = TestUtils.getTestFolder();
 
-        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, Collections.emptyList(), false);
+        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, Collections.emptyList(), false, SimpleExecutor.getInstance(), 8);
         final FileSystemSearch search = new FileSystemSearch(configuration);
         search.search();
 
         final Queue<Resource> files = search.getFiles();
         final Queue<Resource> failedFiles = search.getFailedFiles();
 
+        Set<String> testContent = TestUtils.getTestContent();
+        for (String string : testContent) {
+            System.out.println(string);
+        }
+
         Assert.assertFalse(files.isEmpty());
         Assert.assertTrue(failedFiles.isEmpty());
     }
 
     public void testFileSystemArchiveAwareCrawler() {
-        final Path directory = getTestFolder();
+        final Path directory = TestUtils.getTestFolder();
 
-        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, Collections.emptyList(), true);
+        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, Collections.emptyList(), true, SimpleExecutor.getInstance(), 8);
         final FileSystemSearch search = new FileSystemSearch(configuration);
         search.search();
 
@@ -69,12 +78,12 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
     }
 
     public void testFileSystemCrawlerWithResourceNameFilter() {
-        final Path directory = getTestFolder();
+        final Path directory = TestUtils.getTestFolder();
 
         final List<ResourceFilter> filters = new ArrayList<>();
         filters.add(new ResourceNameFilter("1.*"));
 
-        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, filters, false);
+        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, filters, false, SimpleExecutor.getInstance(), 8);
         final FileSystemSearch search = new FileSystemSearch(configuration);
         search.search();
 
@@ -90,12 +99,12 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
     }
 
     public void testFileSystemArchiveAwareCrawlerWithResourceNameFilter() {
-        final Path directory = getTestFolder();
+        final Path directory = TestUtils.getTestFolder();
 
         final List<ResourceFilter> filters = new ArrayList<>();
         filters.add(new ResourceNameFilter("1.*"));
 
-        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, filters, true);
+        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, filters, true, SimpleExecutor.getInstance(), 8);
         final FileSystemSearch search = new FileSystemSearch(configuration);
         search.search();
 
@@ -111,12 +120,12 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
     }
 
     public void testFileSystemCrawlerWithResourcePathFilter() {
-        final Path directory = getTestFolder();
+        final Path directory = TestUtils.getTestFolder();
 
         final List<ResourceFilter> filters = new ArrayList<>();
         filters.add(new ResourcePathFilter(".*" + "\\" + File.separator + "root" + "\\" + File.separator + "5" + ".*"));
 
-        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, filters, false);
+        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, filters, false, SimpleExecutor.getInstance(), 8);
         final FileSystemSearch search = new FileSystemSearch(configuration);
         search.search();
 
@@ -133,12 +142,12 @@ public class FileSystemCrawlerTest extends AbstractCrawlerTest {
     }
 
     public void testFileSystemArchiveAwareCrawlerWithResourcePathFilter() {
-        final Path directory = getTestFolder();
+        final Path directory = TestUtils.getTestFolder();
 
         final List<ResourceFilter> filters = new ArrayList<>();
         filters.add(new ResourcePathFilter(".*" + "\\" + File.separator + "root" + "\\" + File.separator + "5" + ".*"));
 
-        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, filters, true);
+        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, filters, true, SimpleExecutor.getInstance(), 8);
         final FileSystemSearch search = new FileSystemSearch(configuration);
         search.search();
 

@@ -27,6 +27,9 @@ import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
  */
 public class ResourceNotFilter implements ResourceFilter {
 
+    // TODO java doc
+    // FIXME logging!
+
     final ResourceFilter resourceFilter;
 
     /**

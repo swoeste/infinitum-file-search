@@ -24,6 +24,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import de.swoeste.infinitum.fw.core.bl.file.search.executor.Executor;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
 
@@ -33,6 +37,9 @@ import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
 public class FileSystemSearch {
 
     // TODO java doc
+    // FIXME logging!
+
+    private static final Logger                 LOG = LoggerFactory.getLogger(FileSystemSearch.class);
 
     private final FileSystemSearchConfiguration configuration;
     private final FileSystemCrawler             crawler;
@@ -47,7 +54,10 @@ public class FileSystemSearch {
 
     public void search() {
         try {
+            final long start = System.nanoTime();
             Files.walkFileTree(this.configuration.getPath(), Collections.emptySet(), this.configuration.getDepth(), this.crawler);
+            final long end = System.nanoTime();
+            LOG.debug("Executed search within {} nanoseconds.", end - start); //$NON-NLS-1$
         } catch (final IOException e) {
             // FIXME, implement some nice error handling
             e.printStackTrace();
@@ -63,11 +73,12 @@ public class FileSystemSearch {
     }
 
     private FileSystemCrawler createFileSystemCrawler() {
+        final Executor executor = this.configuration.getExecutor();
         final List<ResourceFilter> filters = this.configuration.getFilters();
         final boolean searchArchives = this.configuration.isSearchArchives();
 
         if (searchArchives) {
-            return new FileSystemArchiveAwareCrawler(filters);
+            return new FileSystemCrawlerArchiveAware(executor, filters);
         } else {
             return new FileSystemCrawler(filters);
         }

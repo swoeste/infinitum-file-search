@@ -30,6 +30,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.ResourceType;
 import de.swoeste.infinitum.fw.core.bl.file.search.resource.file.SimpleFile;
 
 /**
@@ -59,7 +60,8 @@ public class FileSystemCrawler extends SimpleFileVisitor<Path> {
     @Override
     public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs) throws IOException {
         if (file.toFile().isFile()) {
-            final Resource currentFile = new SimpleFile(file);
+            // We don't care about the resource type, because we don't respect archives here.
+            final Resource currentFile = new SimpleFile(ResourceType.UNKNOWN, file);
             addResource(currentFile);
         }
         return FileVisitResult.CONTINUE;
@@ -68,7 +70,8 @@ public class FileSystemCrawler extends SimpleFileVisitor<Path> {
     /** {@inheritDoc} */
     @Override
     public FileVisitResult visitFileFailed(final Path file, final IOException exc) throws IOException {
-        this.failedFiles.add(new SimpleFile(file));
+        // We don't care about the resource type, because we don't respect archives here.
+        this.failedFiles.add(new SimpleFile(ResourceType.UNKNOWN, file));
         return FileVisitResult.CONTINUE;
     }
 

@@ -18,14 +18,21 @@
  */
 package de.swoeste.infinitum.fw.core.bl.file.search.resource.file;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
+import java.io.RandomAccessFile;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.Validate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.swoeste.infinitum.fw.core.bl.file.search.resource.AbstractResource;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.ResourceType;
 
 /**
  * This represents a concrete file from a file storage.
@@ -34,30 +41,87 @@ import de.swoeste.infinitum.fw.core.bl.file.search.resource.AbstractResource;
  */
 public class SimpleFile extends AbstractResource {
 
+    // TODO umbenennen in FileResource ?
+
+    // TODO java doc
+    // FIXME logging!
+
+    private static final Logger LOG       = LoggerFactory.getLogger(SimpleFile.class);
+
+    private static final String READ_MODE = "r";                                                                                                                                                                                                                                                                            //$NON-NLS-1$
+
     /**
      * Constructor for a new SimpleFile.
      *
-     * @param filePath
+     * @param path
      *            the full qualified path representing this file (including the file name)
      */
-    public SimpleFile(final Path filePath) {
-        // TODO improve me
-        super(null, filePath.toAbsolutePath().toString(), filePath.toAbsolutePath().getFileName().toString());
+    public SimpleFile(final ResourceType type, final Path path) {
+        super(null, type, path.toAbsolutePath().toString(), path.toAbsolutePath().getFileName().toString());
     }
 
     /** {@inheritDoc} */
     @Override
     public String getContentAsStringInternal() throws IOException {
-        final Path path = Paths.get(getPath());
-        final byte[] bytes = Files.readAllBytes(path);
-        return new String(bytes, getEncoding());
+        final byte[] content = getContentAsByteArray();
+        if (content.length > 0) {
+            return new String(content, getEncoding());
+        } else {
+            return null;
+        }
     }
 
     /** {@inheritDoc} */
     @Override
-    public InputStream getInputStream() throws IOException {
+    public byte[] getContentAsByteArray() throws IOException {
         final Path path = Paths.get(getPath());
-        return new FileInputStream(path.toFile());
+        final File file = path.toFile();
+
+        if (file.exists()) {
+            try (final InputStream in = new FileInputStream(file)) {
+                return IOUtils.toByteArray(in);
+            }
+        }
+
+        return new byte[0];
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public byte[] getContentAsByteArray(final int length) throws IOException {
+        final Path path = Paths.get(getPath());
+        return extracted(length, path);
+    }
+
+    private static byte[] extracted(final int length, final Path path) throws IOException {
+        final File file = path.toFile();
+
+        if (file.exists()) {
+            try (final RandomAccessFile raf = new RandomAccessFile(file, READ_MODE)) {
+                final byte[] magicNumbers = new byte[length];
+                raf.read(magicNumbers);
+                return magicNumbers;
+            } catch (IOException ex) {
+                LOG.error("Unable to check if the file \"{}\" is an archive", path, ex); //$NON-NLS-1$
+                throw ex;
+            }
+        }
+
+        return new byte[0];
+    }
+
+    public static ResourceType determineType(final Path path) throws IOException {
+        Validate.notNull(path, "The 'path' may not be null!"); //$NON-NLS-1$
+
+        final int maxMagicNumberLength = ResourceType.getMaxMagicNumberLength();
+        final byte[] magicNumbers = extracted(maxMagicNumberLength, path); // TODO implement
+
+        // SimpleFile.getContentAsByteArray(...)
+        // Da wird schon das benötigte gemacht ...
+
+        // FIXME
+
+        return ResourceType.determineResourceType(magicNumbers);
     }
 
 }

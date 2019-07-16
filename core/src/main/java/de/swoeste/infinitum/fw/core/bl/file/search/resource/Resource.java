@@ -19,13 +19,26 @@
 package de.swoeste.infinitum.fw.core.bl.file.search.resource;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.Charset;
 
 /**
  * @author swoeste
  */
 public interface Resource {
+
+    /**
+     * The parent of the resource
+     *
+     * @return the parent or null, if the resource has no parent
+     */
+    Resource getParent();
+
+    /**
+     * The type of the resource
+     *
+     * @return the type
+     */
+    ResourceType getType();
 
     /**
      * The name of the resource
@@ -40,6 +53,9 @@ public interface Resource {
      * @return the path as string
      */
     String getPath();
+
+    // TODO getAbsolutePath() // getFullPath() ???
+    String getFullQualifiedPath();
 
     /**
      * The content of the resource (as string)
@@ -56,9 +72,10 @@ public interface Resource {
      */
     Charset getEncoding();
 
-    /**
-     * @return
-     */
-    InputStream getInputStream() throws IOException;
+    // TODO check that all user close the stream!!!???
+
+    byte[] getContentAsByteArray() throws IOException;
+
+    byte[] getContentAsByteArray(int length) throws IOException;
 
 }

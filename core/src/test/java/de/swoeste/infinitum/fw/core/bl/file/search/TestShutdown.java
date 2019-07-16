@@ -1,5 +1,5 @@
 /*-
- * Copyright (C) 2017 Sebastian Woeste
+ * Copyright (C) 2018 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license
  * agreements. See the NOTICE file distributed with this work for additional
@@ -16,27 +16,20 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.swoeste.infinitum.fw.core.bl.file.search.resource.archive;
+package de.swoeste.infinitum.fw.core.bl.file.search;
+
+import org.testng.annotations.AfterSuite;
+
+import de.swoeste.infinitum.fw.core.bl.file.search.executor.SimpleExecutor;
 
 /**
  * @author swoeste
  */
-public enum ArchiveFileType {
+public class TestShutdown {
 
-    ZIP(new byte[] { (byte) 0x50, (byte) 0x4B, (byte) 0x03, (byte) 0x04 });
-
-    final byte[] prefix;
-
-    private ArchiveFileType(final byte[] prefix) {
-        this.prefix = prefix;
-    }
-
-    public byte[] getPrefix() {
-        return this.prefix;
-    }
-
-    public int getPrefixLength() {
-        return this.prefix.length;
+    @AfterSuite
+    public void shutdown() throws InterruptedException {
+        SimpleExecutor.getInstance().shutdown();
     }
 
 }

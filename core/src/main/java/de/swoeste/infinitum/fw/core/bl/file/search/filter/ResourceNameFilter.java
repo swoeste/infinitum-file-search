@@ -30,6 +30,9 @@ import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
  */
 public class ResourceNameFilter implements ResourceFilter {
 
+    // TODO java doc
+    // FIXME logging!
+
     private final Pattern pattern;
 
     /**
@@ -45,9 +48,13 @@ public class ResourceNameFilter implements ResourceFilter {
     /** {@inheritDoc} */
     @Override
     public boolean accept(final Resource resource) {
-        // TODO does not work with archives (?)
         final String fileName = resource.getName();
-        return this.pattern.matcher(fileName).matches();
+        if (fileName != null) {
+            return this.pattern.matcher(fileName).matches();
+        } else {
+            // TODO logging
+            return false;
+        }
     }
 
     /** {@inheritDoc} */

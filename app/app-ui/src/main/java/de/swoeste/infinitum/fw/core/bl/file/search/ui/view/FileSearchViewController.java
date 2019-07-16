@@ -131,7 +131,7 @@ public class FileSearchViewController {
 
         final SearchFileTask task = new SearchFileTask(Arrays.asList(this.searchFileButton, this.searchContentButton), this.searchFileTable.getItems(),
                 this.searchFileTextPath.getText(), this.searchFileTextFile.getText(), this.searchFileCheckBoxIncludeArchives.isSelected(),
-                this.searchFileCheckBoxIncludeSubDirectories.isSelected());
+                this.searchFileCheckBoxIncludeSubDirectories.isSelected(), this.executor);
 
         this.searchStatusProgress.progressProperty().bind(task.progressProperty());
         this.searchStatusProgressMessage.textProperty().bind(task.messageProperty());

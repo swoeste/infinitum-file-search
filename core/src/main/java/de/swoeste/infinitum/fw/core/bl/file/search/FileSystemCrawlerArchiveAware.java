@@ -28,45 +28,54 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.swoeste.infinitum.fw.core.bl.file.search.executor.Executor;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
-import de.swoeste.infinitum.fw.core.bl.file.search.resource.archive.ArchiveFileCrawler;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.ResourceType;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.archive.ArchiveCrawler;
 import de.swoeste.infinitum.fw.core.bl.file.search.resource.file.SimpleFile;
 
 /**
  * @author swoeste
  */
-public class FileSystemArchiveAwareCrawler extends FileSystemCrawler {
+public class FileSystemCrawlerArchiveAware extends FileSystemCrawler {
 
     // TODO java doc
+    // FIXME logging!
 
-    private static final Logger LOG = LoggerFactory.getLogger(FileSystemArchiveAwareCrawler.class);
+    private static final Logger  LOG = LoggerFactory.getLogger(FileSystemCrawlerArchiveAware.class);
+
+    private final ArchiveCrawler crawler;
 
     /**
      * Constructor for a new FileSystemArchiveAwareCrawler.
      *
      * @param filters
      */
-    public FileSystemArchiveAwareCrawler(final List<ResourceFilter> filters) {
+    public FileSystemCrawlerArchiveAware(final Executor executor, final List<ResourceFilter> filters) {
         super(filters);
+        this.crawler = new ArchiveCrawler(executor);
     }
 
     /** {@inheritDoc} */
     @Override
     public FileVisitResult visitFile(final Path path, final BasicFileAttributes attrs) throws IOException {
         if (path.toFile().isFile()) {
-            final Resource currentFile = new SimpleFile(path);
+            final ResourceType type = SimpleFile.determineType(path);
+            final Resource currentFile = new SimpleFile(type, path);
 
             try {
-                final Set<Resource> visitArchive = ArchiveFileCrawler.visitArchive(currentFile);
+                final Set<Resource> visitArchive = this.crawler.visitArchive(currentFile);
                 for (Resource resource : visitArchive) {
                     addResource(resource);
                 }
             } catch (Exception ex) {
+                // TODO exception
+
                 LOG.error("Unable to visit possible archive file \"{}\"", path, ex); //$NON-NLS-1$
                 // re-throw the exception, it will be handled by the
                 // 'visitFileFailed' method in super class
-                throw ex;
+                throw new IOException("", ex);
             }
 
             addResource(currentFile);

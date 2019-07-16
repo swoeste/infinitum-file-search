@@ -1,5 +1,5 @@
 /*-
- * Copyright (C) 2017 Sebastian Woeste
+ * Copyright (C) 2018 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license
  * agreements. See the NOTICE file distributed with this work for additional
@@ -16,24 +16,17 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.swoeste.infinitum.fw.core.bl.file.search.filter;
+package de.swoeste.infinitum.fw.core.bl.file.search;
 
-import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
+import org.testng.annotations.Test;
 
 /**
  * @author swoeste
  */
-public interface ResourceFilter {
+@Test
+@SuppressWarnings("nls")
+public class TestFileSystemArchiveAwareCrawler {
 
-    // TODO java doc
-
-    /**
-     * Evaluates the filter expression on the given resource.
-     *
-     * @param resource
-     *            the resource the filter should be evaluated on
-     * @return true if the resource matches the filter, false if not
-     */
-    boolean accept(Resource resource);
+    // TODO REWORK THIS TEST!
 
 }

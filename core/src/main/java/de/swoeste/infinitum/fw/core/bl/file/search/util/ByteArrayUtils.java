@@ -1,5 +1,5 @@
 /*-
- * Copyright (C) 2017 Sebastian Woeste
+ * Copyright (C) 2018 Sebastian Woeste
  *
  * Licensed to Sebastian Woeste under one or more contributor license
  * agreements. See the NOTICE file distributed with this work for additional
@@ -16,44 +16,40 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.swoeste.infinitum.fw.core.bl.file.search.filter;
+package de.swoeste.infinitum.fw.core.bl.file.search.util;
 
-import java.util.regex.Pattern;
-
-import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
 
 /**
- * This filter is capable of filtering the path of a resource with a regular expression.
- *
  * @author swoeste
  */
-public class ResourcePathFilter implements ResourceFilter {
+public class ByteArrayUtils {
 
     // TODO java doc
     // FIXME logging!
 
-    private final Pattern pattern;
-
-    /**
-     * Constructor for a new ResourceNameFilter.
-     *
-     * @param regEx
-     *            a regular expression to filter the path
-     */
-    public ResourcePathFilter(final String regEx) {
-        this.pattern = Pattern.compile(regEx);
+    private ByteArrayUtils() {
+        // hidden
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean accept(final Resource resource) {
-        final String filePath = resource.getPath();
-        if (filePath != null) {
-        return this.pattern.matcher(filePath).matches();
-        }  else {
-            // TODO logging
+    /**
+     * Does this byte array begin with match array content?
+     *
+     * @param source Byte array to examine
+     * @param match Byte array to locate in <code>source</code>
+     * @return true If the starting bytes are equal
+     */
+    public static boolean startsWith( final byte[] source, final byte[] match ) {
+        if ( match.length > source.length ) {
             return false;
         }
+
+        for ( int i = 0; i < match.length; i++ ) {
+            if ( source[i] != match[i] ) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }

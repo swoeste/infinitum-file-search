@@ -16,31 +16,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.swoeste.infinitum.fw.core.bl.file.search;
+package de.swoeste.infinitum.fw.core.bl.file.search.analyzer;
 
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import org.testng.Assert;
+import org.testng.annotations.Test;
 
 /**
  * @author swoeste
  */
-public class AbstractCrawlerTest {
+@Test
+@SuppressWarnings("nls")
+public class TestResourceContentAnalyzer {
 
-    private static final String TEST_FOLDER_MARKER = "root/test.marker"; //$NON-NLS-1$
-
-    protected Path getTestFolder() {
-        try {
-            final URL resource = this.getClass().getClassLoader().getResource(TEST_FOLDER_MARKER);
-            final Path markerFile = Paths.get(resource.toURI());
-            return markerFile.getParent();
-        } catch (final URISyntaxException e) {
-            Assert.fail();
-            return null;
-        }
-    }
-
+    // TODO REWORK THIS TEST!
 }

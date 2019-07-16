@@ -33,6 +33,9 @@ import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
  */
 public class ResourceContentAnalyzer implements ResourceAnalyzer {
 
+    // TODO java doc
+    // FIXME logging!
+
     private final Pattern searchPattern;
 
     /**
@@ -52,13 +55,15 @@ public class ResourceContentAnalyzer implements ResourceAnalyzer {
             final List<SearchResult> result = new ArrayList<>();
 
             final String contentToAnalyze = resource.getContentAsString();
-            final Matcher matcher = this.searchPattern.matcher(contentToAnalyze);
-            while (matcher.find()) {
-                final int start = matcher.start();
-                final int end = matcher.end();
-                if (start != end) {
-                    final String match = matcher.group();
-                    result.add(new SearchResult(resource, match, start, end));
+            if (contentToAnalyze != null) {
+                final Matcher matcher = this.searchPattern.matcher(contentToAnalyze);
+                while (matcher.find()) {
+                    final int start = matcher.start();
+                    final int end = matcher.end();
+                    if (start != end) {
+                        final String match = matcher.group();
+                        result.add(new SearchResult(resource, match, start, end));
+                    }
                 }
             }
 

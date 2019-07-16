@@ -26,6 +26,8 @@ import java.util.concurrent.Future;
  */
 public interface Executor {
 
+    // TODO java doc
+
     /**
      * Submits a value-returning task for execution and returns a Future representing the pending results of the task.
      * The Future's {@code get} method will return the task's result upon successful completion.

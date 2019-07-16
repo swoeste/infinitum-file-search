@@ -31,6 +31,7 @@ import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
 public class FileContentSearchConfiguration {
 
     // TODO java doc
+    // FIXME logging!
 
     private final Queue<Resource>  files;
     private final ResourceAnalyzer analyzer;

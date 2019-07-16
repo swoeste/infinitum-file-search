@@ -34,6 +34,9 @@ import org.slf4j.LoggerFactory;
 // TODO naming
 public class SimpleExecutor implements Executor {
 
+    // TODO java doc
+    // FIXME logging!
+
     private static final Logger         LOG      = LoggerFactory.getLogger(SimpleExecutor.class);
 
     private static final SimpleExecutor INSTANCE = new SimpleExecutor();

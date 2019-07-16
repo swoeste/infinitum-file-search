@@ -38,7 +38,9 @@ import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
  */
 @Test
 @SuppressWarnings("nls")
-public class FileContentCrawlerTest extends AbstractCrawlerTest {
+public class TestFileContentCrawler {
+
+    // TODO REWORK THIS TEST!
 
     public void testFileContentCrawler() {
         final Queue<Resource> files = searchForFiles(".*");
@@ -114,12 +116,12 @@ public class FileContentCrawlerTest extends AbstractCrawlerTest {
     }
 
     private Queue<Resource> searchForFiles(final String pattern) {
-        final Path directory = getTestFolder();
+        final Path directory = TestUtils.getTestFolder();
 
         final List<ResourceFilter> filters = new ArrayList<>();
         filters.add(new ResourceNameFilter(pattern));
 
-        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, filters, true);
+        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(directory, filters, true, SimpleExecutor.getInstance(), 8);
         final FileSystemSearch search = new FileSystemSearch(configuration);
         search.search();
 

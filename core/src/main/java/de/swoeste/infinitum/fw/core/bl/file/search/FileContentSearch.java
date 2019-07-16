@@ -38,6 +38,9 @@ import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
  */
 public class FileContentSearch {
 
+    // TODO java doc
+    // FIXME logging!
+
     private static final Logger                    LOG = LoggerFactory.getLogger(FileContentSearch.class);
 
     private final FileContentSearchConfiguration   configuration;

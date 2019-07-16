@@ -28,9 +28,10 @@ import org.slf4j.LoggerFactory;
 
 import de.swoeste.infinitum.fw.core.bl.file.search.FileSystemSearch;
 import de.swoeste.infinitum.fw.core.bl.file.search.FileSystemSearchConfiguration;
+import de.swoeste.infinitum.fw.core.bl.file.search.executor.Executor;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourcePathFilter;
-import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
 import de.swoeste.infinitum.fw.core.bl.file.search.ui.model.UIFilePath;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -42,26 +43,31 @@ import javafx.scene.Node;
  */
 public class SearchFileTask extends AbstractNodeDisablingTask<Void> {
 
-    private static final Logger              LOG = LoggerFactory.getLogger(SearchFileTask.class);
+    private static final Logger              LOG     = LoggerFactory.getLogger(SearchFileTask.class);
+
+    // TODO maybe we make this configurable in the future
+    public static final int                  THREADS = 8;
 
     private final ObservableList<UIFilePath> searchResults;
     private final String                     searchPath;
     private final String                     searchFilePattern;
     private final boolean                    includeArchives;
     private final boolean                    includeSubDirectories;
+    private final Executor                   executor;
 
     public SearchFileTask(final List<Node> nodes, final ObservableList<UIFilePath> searchResults, final String searchPath, final String searchFilePattern,
-            final boolean includeArchives, final boolean includeSubDirectories) {
+            final boolean includeArchives, final boolean includeSubDirectories, final Executor executor) {
         super(nodes);
         this.searchResults = searchResults;
         this.searchPath = searchPath;
         this.searchFilePattern = searchFilePattern;
         this.includeArchives = includeArchives;
         this.includeSubDirectories = includeSubDirectories;
+        this.executor = executor;
     }
 
     private FileSystemSearchConfiguration createFileSearchConfig() {
-        return new FileSystemSearchConfiguration(Paths.get(this.searchPath), getSearchFilter(), this.includeArchives, this.includeSubDirectories);
+        return new FileSystemSearchConfiguration(Paths.get(this.searchPath), getSearchFilter(), this.includeArchives, this.includeSubDirectories, this.executor, THREADS);
     }
 
     private List<ResourceFilter> getSearchFilter() {
@@ -88,7 +94,7 @@ public class SearchFileTask extends AbstractNodeDisablingTask<Void> {
         for (Resource resource : searchResult) {
             updateProgress(currWork, maxWork);
             currWork++;
-            this.searchResults.add(new UIFilePath(resource.getPathAsString()));
+            this.searchResults.add(new UIFilePath(resource.getFullQualifiedPath()));
         }
 
         updateMessage("Status: Complete!");

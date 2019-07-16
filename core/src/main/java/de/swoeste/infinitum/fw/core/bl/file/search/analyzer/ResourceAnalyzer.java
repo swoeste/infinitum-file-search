@@ -28,6 +28,8 @@ import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
  */
 public interface ResourceAnalyzer {
 
+    // TODO java doc
+
     /**
      * Analyzes the content of the given resource and returns a list with matches within the content of that resource.
      *

@@ -44,8 +44,8 @@ import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceNameFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourceNotFilter;
 import de.swoeste.infinitum.fw.core.bl.file.search.filter.ResourcePathFilter;
-import de.swoeste.infinitum.fw.core.bl.file.search.model.Resource;
 import de.swoeste.infinitum.fw.core.bl.file.search.model.SearchResult;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
 
 /**
  * @author swoeste
@@ -106,14 +106,16 @@ public class FileSearchApplication {
         System.out.println("Result:");
         final Queue<Resource> files = fsSearch.getFiles();
         for (final Resource resource : files) {
-            System.out.println(resource.getPathAsString());
+            // TODO
+            // System.out.println(resource.getPathAsString());
         }
 
         final Queue<Resource> failedFiles = fsSearch.getFailedFiles();
         if (!failedFiles.isEmpty()) {
             System.out.println("Failed:");
             for (final Resource resource : failedFiles) {
-                System.out.println(resource.getPathAsString());
+                // TODO
+                // System.out.println(resource.getPathAsString());
             }
         }
     }
@@ -122,16 +124,16 @@ public class FileSearchApplication {
         final SimpleExecutor executor = SimpleExecutor.getInstance();
         final ResourceContentAnalyzer analyzer = getResourceContentAnalyzer(cmd);
         final int threads = getThreads(cmd);
-        final FileContentSearchConfiguration configuration = new FileContentSearchConfiguration(search.getFiles(), analyzer, executor, threads);
-        return configuration;
+        return new FileContentSearchConfiguration(search.getFiles(), analyzer, executor, threads);
     }
 
     private static FileSystemSearchConfiguration createFSSConfiguration(final CommandLine cmd) {
+        final SimpleExecutor executor = SimpleExecutor.getInstance();
         final boolean searchArchives = isSearchArchives(cmd);
         final Path searchPath = getSearchPath(cmd);
         final List<ResourceFilter> filters = getResourceFilters(cmd);
-        final FileSystemSearchConfiguration configuration = new FileSystemSearchConfiguration(searchPath, filters, searchArchives);
-        return configuration;
+        final int threads = getThreads(cmd);
+        return new FileSystemSearchConfiguration(searchPath, filters, searchArchives, executor, threads);
     }
 
     private static boolean isSearchArchives(final CommandLine cmd) {
