@@ -33,7 +33,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
 
 import de.swoeste.infinitum.fw.core.bl.file.search.resource.ResourceType;
-import de.swoeste.infinitum.fw.core.bl.file.search.resource.archive.ArchiveFileEntry;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.archive.ArchiveEntry;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.archive.ZIPArchiveEntry;
 import de.swoeste.infinitum.fw.core.bl.file.search.resource.file.SimpleFile;
 
 /**
@@ -65,9 +66,9 @@ public class TestUtils {
         return "5/" + getExistingSimpleFileName(); //$NON-NLS-1$
     }
 
-    public static ArchiveFileEntry getExistingZIPArchiveFile() {
+    public static ArchiveEntry getExistingZIPArchiveFile() {
         final SimpleFile parent = getExistingZIPArchiveFileParent();
-        return new ArchiveFileEntry(parent, ResourceType.UNKNOWN, getExistingZIPArchiveFilePathAsString());
+        return new ZIPArchiveEntry(parent, ResourceType.UNKNOWN, getExistingZIPArchiveEntryPathAsString(), getExistingZIPArchiveEntryName());
     }
 
     public static SimpleFile getExistingZIPArchiveFileParent() {
@@ -81,11 +82,15 @@ public class TestUtils {
         return "5.zip";
     }
 
-    public static String getExistingZIPArchiveFilePathAsString() {
-        return "5/1.txt"; //$NON-NLS-1$
+    public static String getExistingZIPArchiveEntryPathAsString() {
+        return "5/" + getExistingZIPArchiveEntryName();
     }
 
-    public static String getNonExistingFilePathAsString() {
+    public static String getExistingZIPArchiveEntryName() {
+        return "1.txt"; //$NON-NLS-1$
+    }
+
+    public static String getNonExistingSimpleFilePathAsString() {
         return "5/" + getNonExistingSimpleFileName(); //$NON-NLS-1$
     }
 
@@ -101,15 +106,15 @@ public class TestUtils {
 
     public static Path getNonExistingSimpleFilePath() {
         final Path testFolder = TestUtils.getTestFolder();
-        return testFolder.resolve(getNonExistingFilePathAsString());
+        return testFolder.resolve(getNonExistingSimpleFilePathAsString());
     }
 
-    public static ArchiveFileEntry getNonExistingZIPArchiveFile() {
+    public static ArchiveEntry getNonExistingZIPArchiveFile() {
         final SimpleFile simpleFile = getExistingZIPArchiveFileParent();
-        return new ArchiveFileEntry(simpleFile, ResourceType.UNKNOWN, getNonExistingZIPArchiveFilePathAsString());
+        return new ZIPArchiveEntry(simpleFile, ResourceType.UNKNOWN, getNonExistingZIPArchiveEntryPathAsString(), getNonExistingZIPArchiveEntryName());
     }
 
-    public static String getNonExistingZIPArchiveFileName() {
+    public static String getNonExistingZIPArchiveEntryName() {
         return "doesnotexist.txt"; //$NON-NLS-1$
     }
 
@@ -121,11 +126,11 @@ public class TestUtils {
     }
 
     public static String getNonExistingZIPArchiveFileParentPathAsString() {
-        return "doesnotexist.txt";
+        return "doesnotexist.zip";
     }
 
-    public static String getNonExistingZIPArchiveFilePathAsString() {
-        return "5/" + getNonExistingZIPArchiveFileName(); //$NON-NLS-1$
+    public static String getNonExistingZIPArchiveEntryPathAsString() {
+        return "5/" + getNonExistingZIPArchiveEntryName(); //$NON-NLS-1$
     }
 
     public static Set<String> getTestContent() {

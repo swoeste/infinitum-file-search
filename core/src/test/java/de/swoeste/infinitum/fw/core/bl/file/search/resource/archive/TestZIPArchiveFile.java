@@ -32,46 +32,46 @@ import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
 public class TestZIPArchiveFile {
 
     public void testGetParentWithExistingFile() {
-        final ArchiveFileEntry existingFile = TestUtils.getExistingZIPArchiveFile();
+        final ArchiveEntry existingFile = TestUtils.getExistingZIPArchiveFile();
         final Resource parent = existingFile.getParent();
         Assert.assertNotNull(parent);
         Assert.assertEquals(parent, TestUtils.getExistingZIPArchiveFileParent());
     }
 
     public void testGetParentWithNonExistingFile() {
-        final ArchiveFileEntry nonExistingFile = TestUtils.getNonExistingZIPArchiveFile();
+        final ArchiveEntry nonExistingFile = TestUtils.getNonExistingZIPArchiveFile();
         final Resource parent = nonExistingFile.getParent();
         Assert.assertNotNull(parent);
         Assert.assertEquals(parent, TestUtils.getExistingZIPArchiveFileParent());
     }
 
     public void testGetNameWithExistingFile() {
-        final ArchiveFileEntry existingFile = TestUtils.getExistingZIPArchiveFile();
+        final ArchiveEntry existingFile = TestUtils.getExistingZIPArchiveFile();
         final String expectedName = TestUtils.getExistingSimpleFileName();
         Assert.assertEquals(existingFile.getName(), expectedName);
     }
 
     public void testGetNameWithNonExistingFile() {
-        final ArchiveFileEntry nonExistingFile = TestUtils.getNonExistingZIPArchiveFile();
-        final String expectedName = TestUtils.getNonExistingZIPArchiveFileName();
+        final ArchiveEntry nonExistingFile = TestUtils.getNonExistingZIPArchiveFile();
+        final String expectedName = TestUtils.getNonExistingZIPArchiveEntryName();
         Assert.assertEquals(nonExistingFile.getName(), expectedName);
     }
 
     public void testGetPathWithExistingFile() {
-        final ArchiveFileEntry existingFile = TestUtils.getExistingZIPArchiveFile();
-        final String expectedPath = TestUtils.getExistingZIPArchiveFilePathAsString();
+        final ArchiveEntry existingFile = TestUtils.getExistingZIPArchiveFile();
+        final String expectedPath = TestUtils.getExistingZIPArchiveEntryPathAsString();
         Assert.assertEquals(existingFile.getPath(), expectedPath);
     }
 
     public void testGetPathWithNonExistingFile() {
-        final ArchiveFileEntry nonExistingFile = TestUtils.getNonExistingZIPArchiveFile();
-        final String expectedPath = TestUtils.getNonExistingZIPArchiveFilePathAsString();
+        final ArchiveEntry nonExistingFile = TestUtils.getNonExistingZIPArchiveFile();
+        final String expectedPath = TestUtils.getNonExistingZIPArchiveEntryPathAsString();
         Assert.assertEquals(nonExistingFile.getPath(), expectedPath);
     }
 
     public void testGetContentAsByteArrayWithExistingFile() {
         try {
-            final ArchiveFileEntry existingFile = TestUtils.getExistingZIPArchiveFile();
+            final ArchiveEntry existingFile = TestUtils.getExistingZIPArchiveFile();
             final byte[] contentAsByteArray = existingFile.getContentAsByteArray();
             Assert.assertNotNull(contentAsByteArray);
             Assert.assertEquals(contentAsByteArray.length, 3);
@@ -82,7 +82,7 @@ public class TestZIPArchiveFile {
 
     public void testGetContentAsByteArrayWithNoneExistingFile() {
         try {
-            final ArchiveFileEntry nonExistingFile = TestUtils.getNonExistingZIPArchiveFile();
+            final ArchiveEntry nonExistingFile = TestUtils.getNonExistingZIPArchiveFile();
             final byte[] contentAsByteArray = nonExistingFile.getContentAsByteArray();
             Assert.assertNotNull(contentAsByteArray);
             Assert.assertEquals(contentAsByteArray.length, 0);
@@ -93,7 +93,7 @@ public class TestZIPArchiveFile {
 
     public void testGetContentAsByteArrayWithLengthWithExistingFile() {
         try {
-            final ArchiveFileEntry existingFile = TestUtils.getExistingZIPArchiveFile();
+            final ArchiveEntry existingFile = TestUtils.getExistingZIPArchiveFile();
             final byte[] contentAsByteArray = existingFile.getContentAsByteArray(2);
             Assert.assertNotNull(contentAsByteArray);
             Assert.assertEquals(contentAsByteArray.length, 2);
@@ -104,7 +104,7 @@ public class TestZIPArchiveFile {
 
     public void testGetContentAsByteArrayWithLengthWithNoneExistingFile() {
         try {
-            final ArchiveFileEntry nonExistingFile = TestUtils.getNonExistingZIPArchiveFile();
+            final ArchiveEntry nonExistingFile = TestUtils.getNonExistingZIPArchiveFile();
             final byte[] contentAsByteArray = nonExistingFile.getContentAsByteArray(2);
             Assert.assertNotNull(contentAsByteArray);
             Assert.assertEquals(contentAsByteArray.length, 0);
@@ -115,7 +115,7 @@ public class TestZIPArchiveFile {
 
     public void testGetContentAsStringInternalWithExistingFile() {
         try {
-            final ArchiveFileEntry existingFile = TestUtils.getExistingZIPArchiveFile();
+            final ArchiveEntry existingFile = TestUtils.getExistingZIPArchiveFile();
             final String contentAsString = existingFile.getContentAsString();
             Assert.assertNotNull(contentAsString);
             Assert.assertTrue(contentAsString.length() > 0);
@@ -126,8 +126,9 @@ public class TestZIPArchiveFile {
 
     public void testGetContentAsStringInternalWithNonExistingFile() {
         try {
-            final ArchiveFileEntry nonExistingFile = TestUtils.getNonExistingZIPArchiveFile();
-            Assert.assertNull(nonExistingFile.getContentAsString());
+            final ArchiveEntry nonExistingFile = TestUtils.getNonExistingZIPArchiveFile();
+            // TODO maybe we need a "isExisting" flag ???
+            Assert.assertNotNull(nonExistingFile.getContentAsString());
         } catch (Exception ex) {
             Assert.fail("This test does not expect an excpetion: ", ex); //$NON-NLS-1$
         }

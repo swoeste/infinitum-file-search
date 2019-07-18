@@ -18,25 +18,22 @@
  */
 package de.swoeste.infinitum.fw.core.bl.file.search.resource.archive;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import de.swoeste.infinitum.fw.core.bl.file.search.resource.AbstractResource;
 import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.ResourceType;
 
 /**
  * This represents a concrete file within an archive.
  *
  * @author swoeste
  */
-public abstract class AbstractArchiveFile extends AbstractResource {
+public abstract class ArchiveEntry extends AbstractResource {
 
     // TODO JAVADOC
 
-    private static final String   DELIMITER = "!";                                         //$NON-NLS-1$
-
-    private final ArchiveFileType archiveFileType;
+    private static final String DELIMITER = "!";                                         //$NON-NLS-1$
 
     /**
      * Constructor for a new ArchiveEntry.
@@ -46,17 +43,16 @@ public abstract class AbstractArchiveFile extends AbstractResource {
      * @param archiveEntryPath
      *            the full qualified path of the file within the archive
      */
-    public AbstractArchiveFile(final Resource parent, final ArchiveFileType archiveEntryType, final String archiveEntryPath, final String archiveEntryName) {
-        super(parent, archiveEntryPath, archiveEntryName);
-        this.archiveFileType = archiveEntryType;
+    public ArchiveEntry(final Resource parent, final ResourceType archiveEntryType, final String archiveEntryPath, final String archiveEntryName) {
+        super(parent, archiveEntryType, archiveEntryPath, archiveEntryName);
     }
 
-    /**
-     * @return the archiveFileType
-     */
-    public ArchiveFileType getArchiveFileType() {
-        return this.archiveFileType;
-    }
+    // /**
+    // * @return the archiveFileType
+    // */
+    // public ResourceType getArchiveFileType() {
+    // return this.archiveFileType;
+    // }
 
     public String getXPath() {
         return getParent().getPath() + DELIMITER + this.getPath();
@@ -68,18 +64,22 @@ public abstract class AbstractArchiveFile extends AbstractResource {
         return new String(getContentAsByteArray(), getEncoding());
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public InputStream getInputStream() throws IOException {
-        return new ByteArrayInputStream(getContentAsByteArray());
-    }
-
-    protected abstract byte[] getContentAsByteArray() throws IOException;
+    // /** {@inheritDoc} */
+    // @Override
+    // public InputStream getInputStream() throws IOException {
+    // return new ByteArrayInputStream(getContentAsByteArray());
+    // }
+    //
+    // @Override
+    // protected abstract byte[] getContentAsByteArray() throws IOException;
 
     @Override
     public String toString() {
         // TODO rename method
-        return "AbstractArchiveFile [archiveFileType=" + this.archiveFileType + ", getXPath()=" + this.getXPath() + "]";
+        // return "AbstractArchiveFile [archiveFileType=" + this.archiveFileType
+        // + ", getXPath()=" + this.getXPath() + "]";
+
+        return "";
     }
 
 }

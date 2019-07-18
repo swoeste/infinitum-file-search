@@ -54,7 +54,8 @@ public class SimpleFile extends AbstractResource {
      * Constructor for a new SimpleFile.
      *
      * @param path
-     *            the full qualified path representing this file (including the file name)
+     *            the full qualified path representing this file (including the
+     *            file name)
      */
     public SimpleFile(final ResourceType type, final Path path) {
         super(null, type, path.toAbsolutePath().toString(), path.toAbsolutePath().getFileName().toString());
@@ -114,7 +115,8 @@ public class SimpleFile extends AbstractResource {
         Validate.notNull(path, "The 'path' may not be null!"); //$NON-NLS-1$
 
         final int maxMagicNumberLength = ResourceType.getMaxMagicNumberLength();
-        final byte[] magicNumbers = extracted(maxMagicNumberLength, path); // TODO implement
+        final byte[] magicNumbers = extracted(maxMagicNumberLength, path); // TODO
+                                                                           // implement
 
         // SimpleFile.getContentAsByteArray(...)
         // Da wird schon das benötigte gemacht ...

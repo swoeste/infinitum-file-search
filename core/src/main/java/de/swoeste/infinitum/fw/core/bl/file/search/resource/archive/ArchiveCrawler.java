@@ -22,37 +22,65 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang3.Validate;
+
+import de.swoeste.infinitum.fw.core.bl.file.search.executor.Executor;
 import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.ResourceType;
 
 /**
  * @author swoeste
  */
-public class ArchiveFileCrawler {
+public class ArchiveCrawler {
 
-    private ArchiveFileCrawler() {
-        // hidden
+    private final Executor executor;
+
+    public ArchiveCrawler(final Executor executor) {
+        this.executor = executor;
     }
 
-    public static Set<Resource> visitArchive(final Resource resource) throws IOException {
-        final ArchiveFileType archiveFileType = getArchiveFileType(resource);
+    public Set<Resource> visitArchive(final Resource resource) throws IOException {
+        final ResourceType archiveFileType = getArchiveFileType(resource);
 
-        final Set<Resource> visitArchive = new HashSet<>();
-
-        if (ArchiveFileType.ZIP.equals(archiveFileType)) {
-            visitArchive.addAll(ZIPArchiveFileCrawler.visitArchive(resource));
+        final Set<Resource> visitedArchives = new HashSet<>();
+        if (ResourceType.ZIP.equals(archiveFileType)) {
+            visitedArchives.addAll(ZIPArchiveCrawler.visitArchive(resource));
         }
 
-        // TODO add further archive types here
+        // ... add further archive types here ...
 
-        for (Resource resource2 : visitArchive) {
-            visitArchive.addAll(visitArchive(resource2));
+        final Set<Resource> result = new HashSet<>();
+        result.addAll(visitedArchives);
+
+        for (Resource visitedArchive : visitedArchives) {
+            result.addAll(visitArchive(visitedArchive));
         }
 
-        return visitArchive;
+        return result;
     }
 
-    private static ArchiveFileType getArchiveFileType(final Resource resource) throws IOException {
-        return ArchivFileTypeSelector.determineArchiveFileType(resource);
+    private ResourceType getArchiveFileType(final Resource resource) throws IOException {
+
+        Validate.notNull(resource, "The 'resource' may not be null!"); //$NON-NLS-1$
+
+        return resource.getType();
+
+        // final int maxMagicNumberLength =
+        // ResourceType.getMaxMagicNumberLength();
+        // final byte[] magicNumbers = extracted(maxMagicNumberLength, path); //
+        // TODO
+        // // implement
+        //
+        // // SimpleFile.getContentAsByteArray(...)
+        // // Da wird schon das benötigte gemacht ...
+        //
+        // // FIXME
+        //
+        // return ResourceType.determineResourceType(magicNumbers);
+        //
+        // return ResourceType.determineArchiveFileType(resource);
+
+        // return ResourceType.UNKNOWN;
     }
 
 }

@@ -27,8 +27,8 @@ import javafx.concurrent.Task;
 import javafx.scene.Node;
 
 /**
- * This abstract task disables all provided nodes on task start an re-enables them as soon as the task has finished (or
- * an error occurred).
+ * This abstract task disables all provided nodes on task start an re-enables
+ * them as soon as the task has finished (or an error occurred).
  *
  * @author swoeste
  */
@@ -60,11 +60,15 @@ public abstract class AbstractNodeDisablingTask<V> extends Task<V> {
         try {
             changeNodesDisabledStateTo(true);
             return callInternal();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw ex;
         } finally {
             changeNodesDisabledStateTo(false);
         }
     }
 
-    protected abstract V callInternal() throws Exception; // NOSONAR this is by API design of Task
+    protected abstract V callInternal() throws Exception; // NOSONAR this is by
+                                                          // API design of Task
 
 }

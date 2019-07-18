@@ -18,6 +18,7 @@
  */
 package de.swoeste.infinitum.fw.core.bl.file.search.resource.archive;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
@@ -30,17 +31,22 @@ import org.zeroturnaround.zip.ZipEntryCallback;
 import org.zeroturnaround.zip.ZipUtil;
 
 import de.swoeste.infinitum.fw.core.bl.file.search.resource.Resource;
+import de.swoeste.infinitum.fw.core.bl.file.search.resource.ResourceType;
 
 /**
  * @author swoeste
  */
-public class ZIPArchiveFileCrawler {
+public class ZIPArchiveCrawler {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ZIPArchiveFileCrawler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ZIPArchiveCrawler.class);
 
     public static Set<Resource> visitArchive(final Resource resource) throws IOException {
         final ZipEntryCallbackImplementation callback = new ZipEntryCallbackImplementation(resource);
-        ZipUtil.iterate(resource.getInputStream(), callback);
+
+        // ZipUtil.iterate(resource.getInputStream(), callback);
+
+        ZipUtil.iterate(new ByteArrayInputStream(resource.getContentAsByteArray()), callback);
+
         return callback.getCollectedResources();
     }
 
@@ -72,7 +78,11 @@ public class ZIPArchiveFileCrawler {
         @Override
         public void process(final InputStream in, final ZipEntry zipEntry) throws IOException {
             if (!zipEntry.isDirectory()) {
-                this.collectedResources.add(new ZIPArchiveFile(this.parent, zipEntry.getName(), zipEntry.getName()));
+                final int length = ResourceType.getMaxMagicNumberLength();
+                final byte[] magicNumber = new byte[length];
+                in.read(magicNumber);
+                // TODO
+                this.collectedResources.add(new ZIPArchiveEntry(this.parent, ResourceType.determineResourceType(magicNumber), zipEntry.getName(), zipEntry.getName()));
             }
         }
     }
