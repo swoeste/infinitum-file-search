@@ -115,7 +115,7 @@ public class SearchContentTask extends AbstractNodeDisablingTask<Void> {
 
         final Map<String, UIFileContent> resourceByPath = new HashMap<>();
         for (SearchResult resource : contentSearchResult) {
-            final String filePathAsString = resource.getResource().getPath();
+            final String filePathAsString = resource.getResource().getFullQualifiedPath();
 
             UIFileContent uiElement = resourceByPath.get(filePathAsString);
             if (uiElement == null) {
